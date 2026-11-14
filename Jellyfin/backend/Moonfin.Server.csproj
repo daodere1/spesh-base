@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <!-- One place to bump, so the three can't drift apart. The release scripts still
          override all of them with -p: switches. -->
-    <MoonfinVersion>3.1.0.3</MoonfinVersion>
+    <MoonfinVersion>3.1.0.4</MoonfinVersion>
     <AssemblyVersion>$(MoonfinVersion)</AssemblyVersion>
     <FileVersion>$(MoonfinVersion)</FileVersion>
     <Version>$(MoonfinVersion)</Version>
@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Web/loader.js" LogicalName="Moonfin.Server.Web.loader.js" />
+    <EmbeddedResource Include="../../themes/spesh-cinematic.theme.json" LogicalName="Spesh.Base.Themes.spesh-cinematic.json" />
     <EmbeddedResource Include="Web/inject.html" LogicalName="Moonfin.Server.Web.inject.html" />
     <EmbeddedResource Include="Pages/configPage.html" LogicalName="Moonfin.Server.Pages.configPage.html" />
     <EmbeddedResource Include="../../shared/EmulatorJS/player.html" LogicalName="Moonfin.Server.EmulatorJS.player.html" />

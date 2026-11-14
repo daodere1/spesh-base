@@ -60,6 +60,7 @@ public sealed class MoonfinThemeStore
                 }
             }
 
+            AddBundledThemes(result);
             return result;
         }
 
@@ -76,7 +77,25 @@ public sealed class MoonfinThemeStore
             _logger.LogWarning("Theme file missing for indexed theme {ThemeId}: {ThemePath}", item.Id, path);
         }
 
+        AddBundledThemes(result);
         return result;
+    }
+
+    private static JsonElement ReadCinematicTheme()
+    {
+        using var stream = typeof(MoonfinThemeStore).Assembly.GetManifestResourceStream("Spesh.Base.Themes.spesh-cinematic.json")
+            ?? throw new InvalidOperationException("Bundled Spesh Cinematic theme is missing.");
+        using var document = JsonDocument.Parse(stream);
+        return document.RootElement.Clone();
+    }
+
+    private static void AddBundledThemes(List<JsonElement> themes)
+    {
+        // An administrator-uploaded revision takes precedence over the bundled version.
+        if (!themes.Any(theme => theme.TryGetProperty("id", out var id) && id.GetString() == "spesh-cinematic"))
+        {
+            themes.Add(ReadCinematicTheme());
+        }
     }
 
     /// <summary>
@@ -95,7 +114,8 @@ public sealed class MoonfinThemeStore
         var indexEntry = GetIndexEntries().FirstOrDefault(entry => string.Equals(entry.Id, normalizedId, StringComparison.OrdinalIgnoreCase));
         var path = indexEntry != null ? ResolveThemePath(indexEntry) : Path.Combine(_themesPath, normalizedId + ".json");
 
-        return await ReadThemeFileAsync(path).ConfigureAwait(false);
+        var uploaded = await ReadThemeFileAsync(path).ConfigureAwait(false);
+        return uploaded ?? (normalizedId == "spesh-cinematic" ? ReadCinematicTheme() : null);
     }
 
     /// <summary>

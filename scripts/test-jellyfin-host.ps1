@@ -1,6 +1,6 @@
 param(
     [string]$ServerExecutable = 'C:/Program Files/Jellyfin/Server/jellyfin.exe',
-    [string]$Version = '3.1.0.3',
+    [string]$Version = '3.1.0.4',
     [int]$Port = 18097,
     [string]$ThemePath = '',
     [string]$OutputDirectory = ''
@@ -66,6 +66,14 @@ try {
     $read = Invoke-RestMethod "$base/Moonfin/Settings" -Headers $headers
     if (-not $saved.success -or $read.global.customThemeId -ne 'spesha-style' -or $read.tv.hideWatchedInRecentRows -ne $false) { throw 'Settings did not round-trip between routes.' }
     $themeVerified = $false
+    $bundledTheme = Invoke-RestMethod "$base/Spesh/Themes/spesh-cinematic" -Headers $headers
+    $themeList = (Invoke-RestMethod "$base/Moonfin/Themes" -Headers $headers)
+    if ($bundledTheme.displayName -ne 'Spesh Cinematic' -or @($themeList | Where-Object id -eq 'spesh-cinematic').Count -ne 1) { throw 'Bundled Cinematic theme is missing or duplicated.' }
+    $bundledTheme.displayName = 'Cinematic administrator override'
+    Invoke-RestMethod "$base/Spesh/Admin/Themes" -Headers $headers -Method Post -ContentType 'application/json' -Body ($bundledTheme | ConvertTo-Json -Depth 20) | Out-Null
+    $override = Invoke-RestMethod "$base/Moonfin/Themes/spesh-cinematic" -Headers $headers
+    $overrideList = (Invoke-RestMethod "$base/Spesh/Themes" -Headers $headers)
+    if ($override.displayName -ne 'Cinematic administrator override' -or @($overrideList | Where-Object id -eq 'spesh-cinematic').Count -ne 1) { throw 'Administrator theme override was not preferred.' }
     if ($ThemePath) {
         $theme = Get-Content -LiteralPath $ThemePath -Raw
         $themeId = ($theme | ConvertFrom-Json).id
@@ -96,7 +104,11 @@ try {
         $persistedTheme = Invoke-RestMethod "$base/Spesh/Themes/$themeId" -Headers $headers
         if ($persistedTheme.id -ne $themeId) { throw 'Uploaded theme did not survive restart.' }
     }
+    $persistedOverride = Invoke-RestMethod "$base/Spesh/Themes/spesh-cinematic" -Headers $headers
+    if ($persistedOverride.displayName -ne 'Cinematic administrator override') { throw 'Cinematic override did not survive restart.' }
     $report = @{ServerVersion=$info.Version;PluginVersion=$ping.version;PluginLoaded=$true;AuthenticatedRoutes=$true;UnauthenticatedDenied=$true;SettingsRoundTrip=$true;ThemeRoundTrip=$themeVerified;AdminPage=$true;RestartPersistence=$true;ProductionChanged=$false}
+    $report.BundledCinematicTheme = $true
+    $report.CinematicAdminOverride = $true
     $report | ConvertTo-Json | Set-Content (Join-Path $output 'report.json')
     $report | ConvertTo-Json
 } finally {

@@ -1,0 +1,15 @@
+{
+  "customThemeId": "spesh-cinematic",
+  "navbarPosition": "left",
+  "navbarAlwaysExpanded": false,
+  "showPosterLabels": false,
+  "cardFocusExpansion": false,
+  "mediaBarMode": "moonfin",
+  "mediaBarRowPeek": false,
+  "homeRowsImageTypeOverride": true,
+  "homeRowsImageType": "thumb",
+  "homeImageTypeContinueWatching": "thumb",
+  "libraryStyle": "modern",
+  "detailScreenStyle": "spotlight",
+  "mediaBarTrailerPreview": true
+}
