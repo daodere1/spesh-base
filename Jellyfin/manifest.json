@@ -8,6 +8,15 @@
     "category": "General",
     "versions": [
       {
+        "version": "3.1.0.3",
+        "changelog": "Spesh Base 3.1.0.3",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://github.com/daodere1/spesh-base/releases/download/spesh-v3.1.0.3/Spesh.Base-3.1.0.3.zip",
+        "checksum": "87E6F034A5D3701287B241FCB0DEB3B5",
+        "timestamp": "2026-11-14T06:25:46Z",
+        "dependencies": []
+      },
+      {
         "version": "3.1.0.2",
         "changelog": "Spesh Base 3.1.0.2",
         "targetAbi": "10.10.0.0",
