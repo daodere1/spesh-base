@@ -828,7 +828,7 @@ public class MoonfinSettingsProfile
 
     // Watch Parties. syncPlayEnabled above is their master toggle.
 
-    /// <summary>What a Jellyfin user starts: "moonbase" or "syncplay".</summary>
+    /// <summary>Selects Spesh Base watch parties or Jellyfin SyncPlay. The stored values remain compatible with existing clients.</summary>
     [JsonPropertyName("watchPartyService")]
     public string? WatchPartyService { get; set; }
 

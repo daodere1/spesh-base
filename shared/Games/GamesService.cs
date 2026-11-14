@@ -258,7 +258,7 @@ public partial class GamesService
         _logger = logger ?? NullLogger<GamesService>.Instance;
     }
 
-    /// <summary>Returns the libraries Moonbase treats as game (ROM) libraries.</summary>
+    /// <summary>Returns the libraries Spesh Base treats as game (ROM) libraries.</summary>
     public IReadOnlyList<GameLibrary> GetGameLibraries()
     {
         var config = GamesHost.Config();

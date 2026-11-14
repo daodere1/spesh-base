@@ -5,7 +5,7 @@ using System.Globalization;
 namespace Moonfin.Tmdb;
 
 /// <summary>
-/// The TMDB discover rows Moonbase serves by name, so every app asks for the same query and the
+/// The TMDB discover rows Spesh Base serves by name, so every app asks for the same query and the
 /// filters, dates and region live in one place.
 /// </summary>
 public static class TmdbDiscoverCharts

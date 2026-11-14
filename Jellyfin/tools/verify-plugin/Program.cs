@@ -2,7 +2,7 @@ using System.Reflection;
 
 if (args.Length is < 1 or > 2)
 {
-    Console.Error.WriteLine("Usage: VerifyPlugin <path-to-Moonfin.Server.dll> [expected-version]");
+    Console.Error.WriteLine("Usage: VerifyPlugin <path-to-Spesh.Base.dll> [expected-version]");
     return 2;
 }
 
