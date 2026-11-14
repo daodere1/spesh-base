@@ -48,11 +48,13 @@ User-data files retain their names and contents. The conversion preserves unknow
 3. Move the old base-plugin directory entirely outside Jellyfin's `plugins` tree. Keep it for rollback. Do not run both base plugins together: the compatibility routes overlap.
 4. Confirm there is no existing `Spesh.Base.xml`, `SpeshBase` data directory or active Spesh Base installation. If any exist, stop and reconcile them rather than overwriting them.
 5. Copy the two prepared configuration entries into Jellyfin's `plugins/configurations` directory. Retain the original configuration and original data directory for rollback.
-6. Extract the verified `Spesh.Base-3.1.0.3.zip` into a new plugin directory, such as `plugins/Spesh Base_3.1.0.3`. Ship `Spesh.Base.dll` and `SharpCompress.dll` together. Restore the service account's required read/write permissions on copied data.
-7. Start Jellyfin. Confirm Spesh Base is Active, inspect startup logs and check settings and themes from one existing app before changing its API routes.
+6. Extract the verified `Spesh.Base-3.1.0.3.zip` into a new plugin directory, such as `plugins/Spesh Base_3.1.0.3`. Ship `Spesh.Base.dll` and `SharpCompress.dll` together. If retaining an existing hosted frontend, copy its contents into `plugins/configurations/SpeshBase/web`; this persistent location survives plugin updates. Restore the service account's required read/write permissions on copied data.
+7. Start Jellyfin. Wait until both the protected plugin routes and hosted web page are ready; Jellyfin's public version endpoint can respond while startup is still in progress. Confirm Spesh Base is Active, inspect startup logs and check settings and themes from one existing app before changing its API routes.
 8. Add the Spesh Base repository from the README and check the available update version. Retire the old base-plugin update feed if it is no longer needed.
 
-The separately built Spesh Media web frontend is not bundled in this package. Keep the old frontend in the backup; migrating or rebuilding it is separate work. Native client branding and route migration also remain separate.
+The separately built Spesh Media web frontend is not bundled in this package. Keep the old frontend in the backup and persistent web directory when maintaining existing access; rebuilding it is separate work. Native client branding and route migration also remain separate.
+
+Windows service control requires an administrator session. Keep backup access permissions compatible with the service account without unnecessarily changing folder ownership. Version 3.1.0.3's original ZIP does not include `meta.json`; Jellyfin defaults such manual installs to `autoUpdate: false`. To enable updates for that installation, set its generated metadata's `autoUpdate` field to `true` while the service is stopped, then start Jellyfin. New packages built by the updated script include an update-enabled manifest; catalog installation still respects any existing local opt-out.
 
 ## Rollback
 
