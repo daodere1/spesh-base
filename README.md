@@ -8,7 +8,7 @@ Spesh Base has its own plugin ID, `Spesh.Base.dll`, configuration and data folde
 
 Add **Spesh Base** in Dashboard > Plugins > Repositories:
 
-`https://raw.githubusercontent.com/jonlukemrodriguez-ui/spesh-base/master/manifest.json`
+`https://raw.githubusercontent.com/daodere1/spesh-base/master/manifest.json`
 
 Install Spesh Base from the catalog after the first release is published. Future releases update through Jellyfin's normal plugin update task, subject to the server's automatic update settings and restart requirements.
 
