@@ -8,6 +8,15 @@
     "category": "General",
     "versions": [
       {
+        "version": "3.1.0.2",
+        "changelog": "Spesh Base 3.1.0.2",
+        "targetAbi": "10.10.0.0",
+        "sourceUrl": "https://github.com/jonlukemrodriguez-ui/spesh-base/releases/download/spesh-v3.1.0.2/Spesh.Base-3.1.0.2.zip",
+        "checksum": "F7DEE0D69C41E402FBFEDCE3695365E3",
+        "timestamp": "2026-11-14T02:14:58Z",
+        "dependencies": []
+      },
+      {
         "version": "3.1.0.1",
         "changelog": "Spesh Base 3.1.0.1",
         "targetAbi": "10.10.0.0",
