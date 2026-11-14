@@ -177,7 +177,8 @@ public sealed class DiscSet
         }
 
         var exact = Path.Combine(folder, name);
-        if (File.Exists(exact))
+        // Windows File.Exists ignores case; enumerate there to return the on-disk name.
+        if (!OperatingSystem.IsWindows() && File.Exists(exact))
         {
             return exact;
         }
