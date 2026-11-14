@@ -350,6 +350,7 @@ public class SeerrProxyController : ControllerBase
     /// remote client can still see the calendar when Sonarr is only reachable on the local network.
     /// </summary>
     [HttpGet("Sonarr/Calendar")]
+    [HttpGet("~/Spesh/Sonarr/Calendar")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public Task<IActionResult> GetSonarrCalendar() => GetArrCalendar("sonarr");
@@ -433,11 +434,10 @@ public class SeerrProxyController : ControllerBase
     private async Task<IActionResult> GetArrCalendar(string service)
     {
         var config = MoonfinPlugin.Instance?.Configuration;
-        var seerrUrl = config?.GetEffectiveSeerrUrl();
-        if (config?.SeerrEnabled != true || string.IsNullOrEmpty(seerrUrl))
+        if (config == null || !SonarrCalendarConnection.Configured(config, service == "sonarr"))
         {
             return StatusCode(StatusCodes.Status503ServiceUnavailable,
-                new { error = "Seerr integration is not enabled" });
+                new { error = "No calendar connection is configured" });
         }
 
         var userId = this.GetUserIdFromClaims();

@@ -2170,8 +2170,22 @@
                     <div class="verticalSection">
                         <h3 class="sectionTitle">Calendar</h3>
                         <div class="fieldDescription" style="margin-bottom: 1em;">
-                            The Calendar screen reads Sonarr and Radarr through the servers set up in Seerr, so it needs Seerr turned on above.
+                            The Calendar screen reads Sonarr and Radarr through Seerr. An optional direct Sonarr connection below provides episode calendars when Seerr or its admin session is unavailable.
                             Each user only sees titles from the Jellyfin libraries they have access to.
+                        </div>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label><input type="checkbox" id="SonarrCalendarEnabled" is="emby-checkbox" /><span>Enable direct Sonarr calendar fallback</span></label>
+                            <div class="fieldDescription">Read-only calendar access, independent of Seerr sign-in. This does not enable Sonarr queue changes or media requests.</div>
+                        </div>
+                        <div class="inputContainer">
+                            <label class="inputLabel inputLabelUnfocused" for="SonarrUrl">Sonarr server URL</label>
+                            <input type="text" id="SonarrUrl" is="emby-input" placeholder="http://localhost:8989/sonarr" autocomplete="off" />
+                            <div class="fieldDescription">Use the address reachable from Jellyfin, including any URL base. Use HTTPS for remote hosts; plain HTTP is limited to local networks. Do not include credentials or an API key in the URL.</div>
+                        </div>
+                        <div class="inputContainer">
+                            <label class="inputLabel inputLabelUnfocused" for="SonarrApiKey">Sonarr API key</label>
+                            <input type="password" id="SonarrApiKey" is="emby-input" autocomplete="new-password" />
+                            <div class="fieldDescription">Stored in the server's administrator-only plugin configuration. Never sent to client apps or included in synced user profiles.</div>
                         </div>
                         <div class="inputContainer">
                             <label class="inputLabel inputLabelUnfocused" for="CalendarAdminsOnly">Who can see the calendar</label>
@@ -6298,7 +6312,9 @@
             var FIELD_DEPENDENCIES = [
                 { parent: 'SeerrEnabled', fields: ['SeerrUrl', 'SeerrDisplayName', 'SeerrWebhookBlock', 'DefaultShowSeerrButton', 'DefaultSeerrHeading', 'DefaultSeerrBlockNsfw', 'DefaultSeerrShowMissingCollectionItems', 'DefaultShowSeerrAvailabilityBadges', 'DefaultSeerrBadgeStyle', 'DefaultSeerrDiscoveryList', 'DefaultRadarrCalendarShowCinema', 'DefaultRadarrCalendarShowDigital', 'DefaultRadarrCalendarShowPhysical', 'DefaultRadarrCalendarShowDate', 'DefaultRadarrCalendarHideDownloaded', 'DefaultSonarrCalendarShowDate', 'DefaultSonarrCalendarShowEpisodeInfo', 'DefaultSonarrCalendarHideDownloaded', 'DefaultMergeRadarrSonarrCalendars', 'DefaultSeerrRowsSortBy', 'DefaultSeerrRowsSortOrder'] },
                 { parent: 'SeerrEnabled', off: ['true'], fields: ['DefaultSeerrOffNote'] },
-                { parent: 'SeerrEnabled', fields: ['CalendarAdminsOnly', 'CalendarDaysBack', 'CalendarDaysAhead', 'CalendarCacheMinutes', 'StuckDownloadNotify', 'StuckDownloadStalledHours', 'DefaultShowCalendarButton', 'DefaultCalendarHeading', 'DefaultCalendarStyle', 'DefaultCalendarWeekStart', 'DefaultCalendarScope', 'DefaultCalendarShowEpisodes', 'DefaultCalendarShowMovies', 'DefaultCalendarLibraryPicker', 'DefaultCalendarIncludeUnmonitored', 'DefaultCalendarShowSpecials', 'DefaultCalendarShowBadges', 'DefaultCalendarColorBy', 'DefaultCalendarImageType', 'DefaultCalendarSpoilerSafe', 'DefaultCalendarSelectAction', 'DefaultCalendarRequestButton', 'DefaultCalendarReminders', 'DefaultCalendarRowSeeAll', 'DefaultShowNextAirDate'] },
+                { parent: ['SeerrEnabled', 'SonarrCalendarEnabled'], fields: ['CalendarAdminsOnly', 'CalendarDaysBack', 'CalendarDaysAhead', 'CalendarCacheMinutes', 'DefaultShowCalendarButton', 'DefaultCalendarHeading', 'DefaultCalendarStyle', 'DefaultCalendarWeekStart', 'DefaultCalendarScope', 'DefaultCalendarShowEpisodes', 'DefaultCalendarShowMovies', 'DefaultCalendarLibraryPicker', 'DefaultCalendarIncludeUnmonitored', 'DefaultCalendarShowSpecials', 'DefaultCalendarShowBadges', 'DefaultCalendarColorBy', 'DefaultCalendarImageType', 'DefaultCalendarSpoilerSafe', 'DefaultCalendarSelectAction', 'DefaultCalendarRequestButton', 'DefaultCalendarReminders', 'DefaultCalendarRowSeeAll', 'DefaultShowNextAirDate'] },
+                { parent: 'SonarrCalendarEnabled', fields: ['SonarrUrl', 'SonarrApiKey'] },
+                { parent: 'SeerrEnabled', fields: ['StuckDownloadNotify', 'StuckDownloadStalledHours'] },
                 { parent: 'StuckDownloadNotify', fields: ['StuckDownloadStalledHours'] },
                 { parent: 'MdblistOfficialListsEnabled', fields: ['MdblistOfficialListsMaxItems'] },
                 { parent: 'SmartSearchEnabled', fields: ['SmartSearchModel'] },
@@ -11310,6 +11326,9 @@
                     document.querySelector('#SeerrDisplayName').value = config.SeerrDisplayName || '';
                     document.querySelector('#PublicServerUrl').value = config.PublicServerUrl || '';
                     document.querySelector('#CalendarAdminsOnly').value = config.CalendarAdminsOnly === true ? 'true' : 'false';
+                    document.querySelector('#SonarrCalendarEnabled').checked = config.SonarrCalendarEnabled === true;
+                    document.querySelector('#SonarrUrl').value = config.SonarrUrl || '';
+                    document.querySelector('#SonarrApiKey').value = config.SonarrApiKey || '';
                     document.querySelector('#CalendarDaysBack').value = config.CalendarDaysBack != null ? config.CalendarDaysBack : 14;
                     document.querySelector('#CalendarDaysAhead').value = config.CalendarDaysAhead != null ? config.CalendarDaysAhead : 90;
                     document.querySelector('#CalendarCacheMinutes').value = config.CalendarCacheMinutes != null ? config.CalendarCacheMinutes : 5;
@@ -12245,6 +12264,9 @@
                         config.SeerrDisplayName = document.querySelector('#SeerrDisplayName').value || null;
                         config.PublicServerUrl = document.querySelector('#PublicServerUrl').value || null;
                         config.CalendarAdminsOnly = document.querySelector('#CalendarAdminsOnly').value === 'true';
+                        config.SonarrCalendarEnabled = document.querySelector('#SonarrCalendarEnabled').checked;
+                        config.SonarrUrl = document.querySelector('#SonarrUrl').value.trim() || null;
+                        config.SonarrApiKey = document.querySelector('#SonarrApiKey').value.trim() || null;
                         config.CalendarDaysBack = wholeNumberIn(document.querySelector('#CalendarDaysBack').value, 0, 365, 14);
                         config.CalendarDaysAhead = wholeNumberIn(document.querySelector('#CalendarDaysAhead').value, 0, 730, 90);
                         config.CalendarCacheMinutes = wholeNumberIn(document.querySelector('#CalendarCacheMinutes').value, 0, 1440, 5);

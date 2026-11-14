@@ -73,6 +73,15 @@ public class PluginConfiguration : BasePluginConfiguration, IGamesConfig
     /// </summary>
     public int CalendarCacheMinutes { get; set; } = 5;
 
+    /// <summary>Allow a direct, read-only Sonarr calendar fallback when Seerr is unavailable.</summary>
+    public bool SonarrCalendarEnabled { get; set; }
+
+    /// <summary>Sonarr server base URL, including any reverse-proxy path.</summary>
+    public string? SonarrUrl { get; set; }
+
+    /// <summary>Server-side Sonarr secret. Never included in client settings or capability responses.</summary>
+    public string? SonarrApiKey { get; set; }
+
     /// <summary>
     /// Tells the requester and every admin when a Radarr or Sonarr download for a request gets stuck.
     /// </summary>

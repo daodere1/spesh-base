@@ -1,8 +1,9 @@
 param(
     [string]$ServerExecutable = 'C:/Program Files/Jellyfin/Server/jellyfin.exe',
-    [string]$Version = '3.1.0.4',
+    [string]$Version = '3.1.0.5',
     [int]$Port = 18097,
     [string]$ThemePath = '',
+    [string]$DirectSonarrTestUrl = '',
     [string]$OutputDirectory = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -26,6 +27,14 @@ Expand-Archive -LiteralPath $package -DestinationPath $plugin
 <NetworkConfiguration><InternalHttpPort>$Port</InternalHttpPort><InternalHttpsPort>18921</InternalHttpsPort><EnableHttps>false</EnableHttps><EnableIPv4>true</EnableIPv4><EnableIPv6>false</EnableIPv6><AutoDiscovery>false</AutoDiscovery><EnableUPnP>false</EnableUPnP><EnableRemoteAccess>false</EnableRemoteAccess><LocalNetworkAddresses><string>127.0.0.1</string></LocalNetworkAddresses></NetworkConfiguration>
 "@ | Set-Content (Join-Path $config 'network.xml')
 '<PluginConfiguration><EnableSettingsSync>true</EnableSettingsSync><SeerrEnabled>false</SeerrEnabled><PushRelayEnabled>false</PushRelayEnabled><GamesEnabled>false</GamesEnabled><AnimeMarkersEnabled>false</AnimeMarkersEnabled><SmartSearchEnabled>false</SmartSearchEnabled></PluginConfiguration>' | Set-Content (Join-Path $pluginConfig 'Spesh.Base.xml')
+if ($DirectSonarrTestUrl) {
+    $sonarrTestUri = [Uri]$DirectSonarrTestUrl
+    if (-not $sonarrTestUri.IsLoopback) { throw 'The synthetic Sonarr test server must be loopback-only.' }
+    $configurationPath = Join-Path $pluginConfig 'Spesh.Base.xml'
+    $xml = Get-Content $configurationPath -Raw
+    $direct = '<SonarrCalendarEnabled>true</SonarrCalendarEnabled><SonarrUrl>' + [Security.SecurityElement]::Escape($DirectSonarrTestUrl) + '</SonarrUrl><SonarrApiKey>spesh-isolated-sonarr-key</SonarrApiKey>'
+    $xml.Replace('</PluginConfiguration>', $direct + '</PluginConfiguration>') | Set-Content $configurationPath
+}
 $base = "http://127.0.0.1:$Port"
 $process = $null
 $headers = @{}
@@ -61,6 +70,21 @@ try {
     if (-not $ping.installed -or $ping.version -ne $Version -or $legacyPing.version -ne $Version -or $ping.pushSupported) { throw 'Plugin ping contract mismatch.' }
     $unauthenticated = Invoke-WebRequest "$base/Spesh/Ping" -SkipHttpErrorCheck
     if ($unauthenticated.StatusCode -ne 401) { throw 'Plugin ping must require authentication.' }
+    if ($DirectSonarrTestUrl) {
+        if (-not $ping.calendarAvailable -or -not $ping.sonarrCalendarAvailable -or -not $ping.directSonarrCalendarAvailable) { throw 'Direct Sonarr capabilities were not advertised with Seerr disabled.' }
+        $pingJson = $ping | ConvertTo-Json -Depth 20
+        if ($pingJson -match 'spesh-isolated-sonarr-key|SonarrApiKey|SonarrUrl') { throw 'Sonarr credentials leaked in capabilities.' }
+        $calendarQuery = '?start=1900-01-01&end=3000-01-01&unmonitored=true'
+        $calendar = Invoke-WebRequest "$base/Spesh/Sonarr/Calendar$calendarQuery" -Headers $headers
+        $legacyCalendar = Invoke-WebRequest "$base/Moonfin/Seerr/Sonarr/Calendar$calendarQuery" -Headers $headers
+        $calendarDocument = [System.Text.Json.JsonDocument]::Parse([string]$calendar.Content)
+        try {
+            $episode = $calendarDocument.RootElement[0]
+            if ($calendar.StatusCode -ne 200 -or $legacyCalendar.StatusCode -ne 200 -or $episode.GetProperty('airDateUtc').GetString() -ne '2026-11-16T02:30:00Z' -or $episode.GetProperty('moonfinLibraryIds').ValueKind.ToString() -ne 'Array') { throw 'Direct Sonarr calendar, UTC air time, or library annotations failed.' }
+        } finally { $calendarDocument.Dispose() }
+        $anonymousCalendar = Invoke-WebRequest "$base/Spesh/Sonarr/Calendar$calendarQuery" -SkipHttpErrorCheck
+        if ($anonymousCalendar.StatusCode -ne 401) { throw 'Direct Sonarr calendar must require authentication.' }
+    }
     $settings = @{settings=@{schemaVersion=2;syncEnabled=$true;global=@{visualTheme='custom';customThemeId='spesha-style';hideWatchedInRecentRows=$true};tv=@{hideWatchedInRecentRows=$false}};clientId='spesh-smoke'}
     $saved = Invoke-RestMethod "$base/Spesh/Settings" -Headers $headers -Method Post -ContentType 'application/json' -Body ($settings | ConvertTo-Json -Depth 10)
     $read = Invoke-RestMethod "$base/Moonfin/Settings" -Headers $headers
@@ -98,6 +122,10 @@ try {
         Start-Sleep -Milliseconds 500
     } while ((Get-Date) -lt $deadline)
     if (-not $restarted) { throw 'Isolated server did not recover after restart.' }
+    if ($DirectSonarrTestUrl) {
+        $afterRestart = Invoke-WebRequest "$base/Spesh/Sonarr/Calendar$calendarQuery" -Headers $headers
+        if ($afterRestart.StatusCode -ne 200) { throw 'Direct Sonarr configuration did not survive restart.' }
+    }
     $persisted = Invoke-RestMethod "$base/Spesh/Settings" -Headers $headers
     if ($persisted.global.customThemeId -ne 'spesha-style' -or $persisted.tv.hideWatchedInRecentRows -ne $false) { throw 'Settings did not survive restart.' }
     if ($ThemePath) {
@@ -109,6 +137,7 @@ try {
     $report = @{ServerVersion=$info.Version;PluginVersion=$ping.version;PluginLoaded=$true;AuthenticatedRoutes=$true;UnauthenticatedDenied=$true;SettingsRoundTrip=$true;ThemeRoundTrip=$themeVerified;AdminPage=$true;RestartPersistence=$true;ProductionChanged=$false}
     $report.BundledCinematicTheme = $true
     $report.CinematicAdminOverride = $true
+    $report.DirectSonarrWithoutSeerr = [bool]$DirectSonarrTestUrl
     $report | ConvertTo-Json | Set-Content (Join-Path $output 'report.json')
     $report | ConvertTo-Json
 } finally {

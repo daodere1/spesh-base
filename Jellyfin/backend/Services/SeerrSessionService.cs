@@ -976,21 +976,30 @@ public class SeerrSessionService
 
     /// <summary>
     /// Fetches the Radarr or Sonarr upcoming calendar server-side so the API key never reaches the
-    /// client. The arr connection is read from an admin Seerr session and the arr is called directly,
-    /// which also lets remote clients see the calendar when the arr host is only on the local network.
+    /// client. Seerr supplies the connection first; an independently configured direct Sonarr
+    /// calendar is the optional fallback. Remote clients do not need access to the arr network.
     /// </summary>
     public Task<SeerrProxyResponse> GetArrCalendarAsync(string service, DateTime start, DateTime end, bool unmonitored, int cacheMinutes)
     {
         var isSonarr = string.Equals(service, "sonarr", StringComparison.OrdinalIgnoreCase);
+        var config = MoonfinPlugin.Instance?.Configuration;
         return CalendarCache.GetOrFetchAsync(
-            ArrCalendarWindow.CacheKey(isSonarr, start, end, unmonitored),
+            SonarrCalendarConnection.CachePartition(config) + "|" + ArrCalendarWindow.CacheKey(isSonarr, start, end, unmonitored),
             cacheMinutes,
-            () => FetchArrCalendarFromSeerrAsync(service, isSonarr, ArrCalendarWindow.Query(isSonarr, start, end, unmonitored)),
+            () => SonarrCalendarConnection.ReadAsync(config, isSonarr,
+                () => FetchArrCalendarFromSeerrAsync(service, isSonarr, ArrCalendarWindow.Query(isSonarr, start, end, unmonitored)),
+                (url, key) => FetchDirectSonarrCalendarAsync(url, key, ArrCalendarWindow.Query(true, start, end, unmonitored))),
             response => response.StatusCode == 200 && response.Body != null);
     }
 
     // The arr's own answer, shared by every user. Each user's annotation runs on top of it.
     private ArrCalendarCache<SeerrProxyResponse> CalendarCache { get; } = new();
+
+    private async Task<SeerrProxyResponse> FetchDirectSonarrCalendarAsync(string url, string key, string query) =>
+        await TrySendArrAsync(_httpClientFactory, _logger, "sonarr", [url], key, HttpMethod.Get,
+            "api/v3/calendar?" + query, null, requireSafePrimary: true,
+            clientName: SonarrCalendarConnection.HttpClientName)
+        ?? CalendarError(502, "Could not reach the configured Sonarr calendar server");
 
     private async Task<SeerrProxyResponse> FetchArrCalendarFromSeerrAsync(string service, bool isSonarr, string query)
     {
@@ -1205,7 +1214,9 @@ public class SeerrSessionService
         string pathAndQuery,
         byte[]? jsonBody,
         Func<string, Task<IPAddress[]>>? resolveHost = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        bool requireSafePrimary = false,
+        string? clientName = null)
     {
         Exception? lastError = null;
         for (var i = 0; i < bases.Count; i++)
@@ -1213,7 +1224,7 @@ public class SeerrSessionService
             var baseUrl = bases[i];
             // The External URL can point anywhere, so the API key only goes to it encrypted or on the
             // local network.
-            if (i > 0 && !await CanSendApiKeyAsync(baseUrl, resolveHost ?? (host => Dns.GetHostAddressesAsync(host, cancellationToken))))
+            if ((i > 0 || requireSafePrimary) && !await CanSendApiKeyAsync(baseUrl, resolveHost ?? (host => Dns.GetHostAddressesAsync(host, cancellationToken))))
             {
                 logger.LogWarning(
                     "Skipped the {Service} External URL {BaseUrl} because it uses plain http and isn't on the local network, so the API key would travel unencrypted",
@@ -1224,7 +1235,7 @@ public class SeerrSessionService
 
             try
             {
-                using var client = httpClientFactory.CreateClient();
+                using var client = httpClientFactory.CreateClient(clientName ?? string.Empty);
                 client.Timeout = TimeSpan.FromSeconds(15);
                 using var request = new HttpRequestMessage(method, $"{baseUrl}/{pathAndQuery}");
                 request.Headers.Add("X-Api-Key", apiKey);

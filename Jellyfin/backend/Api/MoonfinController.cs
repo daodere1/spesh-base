@@ -149,8 +149,14 @@ public class MoonfinController : ControllerBase
             ExtendedCompleteShowingsSupported = config?.LiveTvDetectIncompleteRecordings ?? true,
             RecommendationsSupported = config?.RecommendationsProviderEnabled ?? true,
             SmartSearchEnabled = config?.SmartSearchEnabled ?? false,
-            CalendarAvailable = config?.SeerrEnabled == true
-                && !string.IsNullOrEmpty(config.GetEffectiveSeerrUrl())
+            CalendarAvailable = config != null
+                && SonarrCalendarConnection.Configured(config, true)
+                && ArrCalendarWindow.Refusal(config.CalendarAdminsOnly, this.IsAdminFromClaims()) == null,
+            SonarrCalendarAvailable = config != null
+                && SonarrCalendarConnection.Configured(config, true)
+                && ArrCalendarWindow.Refusal(config.CalendarAdminsOnly, this.IsAdminFromClaims()) == null,
+            DirectSonarrCalendarAvailable = config != null
+                && SonarrCalendarConnection.TryGetDirect(config, out _, out _)
                 && ArrCalendarWindow.Refusal(config.CalendarAdminsOnly, this.IsAdminFromClaims()) == null,
             CalendarDaysBack = Math.Max(0, config?.CalendarDaysBack ?? 14),
             CalendarDaysAhead = Math.Max(0, config?.CalendarDaysAhead ?? 90),
@@ -1904,10 +1910,17 @@ public class MoonfinPingResponse
     public bool? SocketRelay { get; set; }
 
     /// <summary>
-    /// True when Seerr is set up for the arr calendar and this user passes the admins-only setting.
+    /// True when Seerr or direct Sonarr is configured and this user passes the calendar policy.
     /// </summary>
     [JsonPropertyName("calendarAvailable")]
     public bool? CalendarAvailable { get; set; }
+
+    [JsonPropertyName("sonarrCalendarAvailable")]
+    public bool? SonarrCalendarAvailable { get; set; }
+
+    /// <summary>Configuration capability only; does not expose credentials or probe server health.</summary>
+    [JsonPropertyName("directSonarrCalendarAvailable")]
+    public bool? DirectSonarrCalendarAvailable { get; set; }
 
     [JsonPropertyName("calendarDaysBack")]
     public int? CalendarDaysBack { get; set; }

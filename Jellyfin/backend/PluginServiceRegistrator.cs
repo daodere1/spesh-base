@@ -113,6 +113,8 @@ public class PluginServiceRegistrator : IPluginServiceRegistrator
         });
         serviceCollection.AddSingleton<SocketRelayManager>();
         serviceCollection.AddHttpClient();
+        serviceCollection.AddHttpClient(SonarrCalendarConnection.HttpClientName)
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 
         // The custom row scrapes need a browser user agent to get a normal page back, and a
         // short timeout so one unresponsive host can't stall the whole sync.
