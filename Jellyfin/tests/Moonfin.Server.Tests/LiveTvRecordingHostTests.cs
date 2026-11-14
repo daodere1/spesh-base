@@ -1,6 +1,6 @@
 using System.Reflection;
 using MediaBrowser.Model.Querying;
-using Jellyfin.Data.Entities;
+using Jellyfin.Database.Implementations.Entities;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.LiveTv;
@@ -235,7 +235,7 @@ public sealed class LiveTvRecordingHostTests : IDisposable
     {
         public bool Allowed { get; init; }
 
-        public override bool IsVisible(User user) => true;
+        public override bool IsVisible(User user, bool skipAllowedTagsCheck = false) => true;
 
         public override bool IsVisibleStandalone(User user) => Allowed;
     }

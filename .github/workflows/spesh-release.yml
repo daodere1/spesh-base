@@ -17,11 +17,11 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '10.0.x'
       - name: Test
         shell: pwsh
         run: |
-          dotnet test Jellyfin/tests/Moonfin.Server.Tests/Moonfin.Server.Tests.csproj -c Release
+          dotnet test Jellyfin/server-plugin.sln -c Release
           if ($LASTEXITCODE -ne 0) { throw 'Tests failed' }
       - name: Build and publish
         shell: pwsh
@@ -40,7 +40,7 @@ jobs:
           if ($catalog.Count -eq 0) {
             $catalog = @([pscustomobject]@{guid='7d374fa1-67cd-4de8-9f93-fd825c14b502'; name='Spesh Base'; overview='The shared server foundation for Spesh Media'; description='Spesh Base provides settings sync, themes, ratings and Seerr integrations for Spesh Media.'; owner='Spesh Media'; category='General'; versions=@()})
           }
-          $entry = [pscustomobject]@{version=$version; changelog="Spesh Base $version"; targetAbi='10.10.0.0'; sourceUrl="https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Spesh.Base-$version.zip"; checksum=(Get-FileHash $zip -Algorithm MD5).Hash; timestamp=(Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ'); dependencies=@()}
+          $entry = [pscustomobject]@{version=$version; changelog="Spesh Base $version"; targetAbi='12.4.0.0'; sourceUrl="https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Spesh.Base-$version.zip"; checksum=(Get-FileHash $zip -Algorithm MD5).Hash; timestamp=(Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ'); dependencies=@()}
           $catalog[0].versions = @($entry) + @($catalog[0].versions | Where-Object version -ne $version)
           ConvertTo-Json -InputObject $catalog -Depth 20 | Set-Content manifest.json
           Copy-Item manifest.json Jellyfin/manifest.json

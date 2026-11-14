@@ -4,7 +4,7 @@ Spesh Base is the Jellyfin server foundation for Spesh Media. All development, t
 
 ## Setup and checks
 
-Use the .NET 8 SDK and PowerShell 7. From the repository root:
+Use the .NET 10 SDK and PowerShell 7. From the repository root:
 
 ```powershell
 dotnet test Jellyfin/server-plugin.sln -c Release

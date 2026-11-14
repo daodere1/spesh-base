@@ -121,7 +121,7 @@ public class RommGamesServiceTests
 
     // The library points at a folder that doesn't exist, the way an admin might set up a
     // library only to host RomM's games.
-    private static FakeLibraryManager LibraryManager() => new(new List<VirtualFolderInfo>
+    private static MediaBrowser.Controller.Library.ILibraryManager LibraryManager() => FakeLibraryManager.Create(new List<VirtualFolderInfo>
     {
         new()
         {

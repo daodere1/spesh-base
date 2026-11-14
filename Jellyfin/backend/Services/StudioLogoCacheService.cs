@@ -33,7 +33,7 @@ public class StudioLogoCacheService
     {
         _logger = logger;
         var dataPath = MoonfinPlugin.Instance?.DataFolderPath
-            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "Moonfin");
+            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "SpeshBase");
 
         _cacheDir = Path.Combine(dataPath, "studio_logos");
         _indexFilePath = Path.Combine(_cacheDir, "index.json");

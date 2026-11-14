@@ -214,7 +214,6 @@ public class PinService
     // Preserve the existing PIN hash format.
     private static byte[] Derive(string pin, byte[] salt, int iterations)
     {
-        using var kdf = new Rfc2898DeriveBytes(pin, salt, iterations, HashAlgorithmName.SHA256);
-        return kdf.GetBytes(HashBytes);
+        return Rfc2898DeriveBytes.Pbkdf2(pin, salt, iterations, HashAlgorithmName.SHA256, HashBytes);
     }
 }

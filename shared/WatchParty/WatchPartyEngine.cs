@@ -1843,7 +1843,6 @@ public sealed class PinHash
 
     private static byte[] Derive(string pin, byte[] salt)
     {
-        using var kdf = new Rfc2898DeriveBytes(pin, salt, Iterations, HashAlgorithmName.SHA256);
-        return kdf.GetBytes(32);
+        return Rfc2898DeriveBytes.Pbkdf2(pin, salt, Iterations, HashAlgorithmName.SHA256, 32);
     }
 }

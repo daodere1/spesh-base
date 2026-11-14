@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Jellyfin.Data.Entities;
+using Jellyfin.Database.Implementations.Entities;
 using MediaBrowser.Controller.Library;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moonfin.Server.Models;

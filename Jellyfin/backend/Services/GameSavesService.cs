@@ -13,7 +13,7 @@ public class GameSavesService
     public GameSavesService()
     {
         var dataPath = MoonfinPlugin.Instance?.DataFolderPath
-            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "Moonfin");
+            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "SpeshBase");
         _savesPath = Path.Combine(dataPath, "saves");
     }
 

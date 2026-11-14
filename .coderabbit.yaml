@@ -4,7 +4,7 @@ reviews:
   path_instructions:
     - path: "**/*.cs"
       instructions: |
-        Spesh Base supports only Jellyfin. The backend targets net8.0 and the Jellyfin 10.10 API baseline. Guard APIs that require newer hosts.
+        Spesh Base supports only Jellyfin. The backend targets net10.0 and the Jellyfin 12.4 API baseline. Guard APIs that require newer hosts.
         Feature code under shared is compiled into the Jellyfin projects. Preserve configuration XML compatibility and existing client JSON fields and routes.
         Synced settings are nullable; null means unset. Do not introduce dictionaries into XML configuration models.
     - path: "**/Pages/**"

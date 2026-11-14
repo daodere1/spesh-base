@@ -161,7 +161,7 @@ public sealed class GameArtworkCatalogTests : IDisposable
 
     private static GameArtworkReconciliationService BuildReconciliationService(GameArtworkCatalog catalog)
     {
-        var libraryManager = new FakeLibraryManager(new List<VirtualFolderInfo>());
+        var libraryManager = FakeLibraryManager.Create(new List<VirtualFolderInfo>());
         var games = new GamesService(libraryManager);
         var thumbs = (GameThumbService)RuntimeHelpers.GetUninitializedObject(typeof(GameThumbService));
         return new GameArtworkReconciliationService(

@@ -32,7 +32,7 @@ public sealed class MoonfinThemeStore
         _logger = logger;
 
         var root = MoonfinPlugin.Instance?.DataFolderPath
-            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "Moonfin");
+            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "SpeshBase");
         _themesPath = Path.Combine(root, "themes");
 
         EnsureDirectory();

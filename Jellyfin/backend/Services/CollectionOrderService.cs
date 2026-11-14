@@ -17,7 +17,7 @@ public class CollectionOrderService
     public CollectionOrderService()
     {
         var dataPath = MoonfinPlugin.Instance?.DataFolderPath
-            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "Moonfin");
+            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "SpeshBase");
         _rootPath = Path.Combine(dataPath, "collections");
     }
 

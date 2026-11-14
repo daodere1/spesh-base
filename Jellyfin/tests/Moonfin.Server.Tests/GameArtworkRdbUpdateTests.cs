@@ -163,7 +163,7 @@ public sealed class GameArtworkRdbUpdateTests : IDisposable
             rdb,
             Path.Combine(_root, "thumb-data"));
         var service = new GameArtworkReconciliationService(
-            new GamesService(new FakeLibraryManager(
+            new GamesService(FakeLibraryManager.Create(
             [
                 new VirtualFolderInfo { Name = "Games", ItemId = libraryId, Locations = [libraryRoot] },
             ])),

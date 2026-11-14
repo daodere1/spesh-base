@@ -31,7 +31,7 @@ public class SeerrSessionService
         _httpClientFactory = httpClientFactory;
 
         var dataPath = MoonfinPlugin.Instance?.DataFolderPath
-            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "Moonfin");
+            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "SpeshBase");
 
         _sessionsPath = Path.Combine(dataPath, "seerr-sessions");
 

@@ -257,7 +257,7 @@ public class GamesServiceTests : IDisposable
         File.SetLastWriteTimeUtc(middle, DateTime.UtcNow.AddDays(1));
 
         var libraryId = Guid.NewGuid().ToString();
-        var service = new GamesService(new FakeLibraryManager(new List<VirtualFolderInfo>
+        var service = new GamesService(FakeLibraryManager.Create(new List<VirtualFolderInfo>
         {
             new() { Name = "Games", ItemId = libraryId, Locations = new[] { libraryRoot } },
         }));
@@ -287,7 +287,7 @@ public class GamesServiceTests : IDisposable
         File.WriteAllBytes(Path.Combine(libraryRoot, "SNES", "Other.bin"), new byte[16]);
 
         var libraryId = Guid.NewGuid().ToString();
-        var service = new GamesService(new FakeLibraryManager(new List<VirtualFolderInfo>
+        var service = new GamesService(FakeLibraryManager.Create(new List<VirtualFolderInfo>
         {
             new() { Name = "Games", ItemId = libraryId, Locations = new[] { libraryRoot } },
         }));
@@ -623,7 +623,7 @@ public class GamesServiceTests : IDisposable
         var backendOverrides = new GameBackendOverrideService(Path.Combine(_root, "backend-overrides"));
 
         var libraryItemId = Guid.NewGuid().ToString();
-        var libraryManager = new FakeLibraryManager(new List<VirtualFolderInfo>
+        var libraryManager = FakeLibraryManager.Create(new List<VirtualFolderInfo>
         {
             new()
             {

@@ -33,7 +33,7 @@ public abstract class FileBackedCacheService<TEntry>
         _logger = logger;
         _displayName = displayName;
         var dataPath = MoonfinPlugin.Instance?.DataFolderPath
-            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "Moonfin");
+            ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "SpeshBase");
 
         if (!Directory.Exists(dataPath))
         {

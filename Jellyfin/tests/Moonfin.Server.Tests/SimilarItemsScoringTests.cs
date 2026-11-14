@@ -41,15 +41,12 @@ public class SimilarItemsScoringTests
     {
         var items = catalog.ToList();
         var queries = new List<InternalItemsQuery>();
-        var library = new FakeLibraryManager
-        {
-            ItemsResultHandler = q =>
+        var library = FakeLibraryManager.Create(itemsResultHandler: q =>
             {
                 queries.Add(q);
                 return items;
             },
-            PeopleHandler = people
-        };
+            peopleHandler: people);
 
         return (new MoonfinSimilarItemsService(library, NullLogger<MoonfinSimilarItemsService>.Instance), queries);
     }

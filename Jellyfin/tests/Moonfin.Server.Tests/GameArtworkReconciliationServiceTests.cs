@@ -24,7 +24,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
         await File.WriteAllBytesAsync(Path.Combine(systemRoot, "Chrono Trigger.sfc"), [1, 2, 3]);
 
         var libraryId = Guid.NewGuid().ToString();
-        var libraryManager = new FakeLibraryManager(
+        var libraryManager = FakeLibraryManager.Create(
         [
             new VirtualFolderInfo
             {
@@ -58,7 +58,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
         await File.WriteAllBytesAsync(Path.Combine(systemRoot, "First.sfc"), [1, 2, 3]);
 
         var libraryId = Guid.NewGuid().ToString();
-        var libraryManager = new FakeLibraryManager(
+        var libraryManager = FakeLibraryManager.Create(
         [
             new VirtualFolderInfo
             {
@@ -193,7 +193,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
         var blockNextResolution = 0;
         var resolutionStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         using var releaseResolution = new ManualResetEventSlim();
-        var libraryManager = new FakeLibraryManager(
+        var libraryManager = FakeLibraryManager.Create(
             folders,
             () =>
             {
@@ -252,7 +252,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
         // StopAsync and resume once that source has been disposed. Callbacks run on their own
         // threads, so anything thrown there is unhandled and ends the process. The window is too
         // narrow to hit by racing threads, so this drives the same field state directly.
-        var libraryManager = new FakeLibraryManager(new List<VirtualFolderInfo>());
+        var libraryManager = FakeLibraryManager.Create(new List<VirtualFolderInfo>());
         var service = new GameArtworkReconciliationService(
             new GamesService(libraryManager),
             (GameThumbService)RuntimeHelpers.GetUninitializedObject(typeof(GameThumbService)),
@@ -603,7 +603,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
             rdb,
             Path.Combine(_root, "thumb-data-" + Guid.NewGuid().ToString("N")));
         var service = new GameArtworkReconciliationService(
-            new GamesService(new FakeLibraryManager(
+            new GamesService(FakeLibraryManager.Create(
             [
                 new VirtualFolderInfo { Name = "Games", ItemId = libraryId, Locations = [libraryRoot] },
             ])),
@@ -753,7 +753,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
         var blockNextResolution = 0;
         var resolutionStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         using var releaseResolution = new ManualResetEventSlim();
-        var libraryManager = new FakeLibraryManager(
+        var libraryManager = FakeLibraryManager.Create(
             folders,
             () =>
             {
@@ -1012,7 +1012,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
         await File.WriteAllBytesAsync(Path.Combine(systemRoot, "Existing.sfc"), new byte[] { 1 });
 
         var libraryId = Guid.NewGuid().ToString();
-        var libraryManager = new FakeLibraryManager(
+        var libraryManager = FakeLibraryManager.Create(
         [
             new VirtualFolderInfo
             {
@@ -1311,7 +1311,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
 
     private static GameArtworkReconciliationService BuildService(string root, out GameArtworkCatalog catalog)
     {
-        var libraryManager = new FakeLibraryManager(new List<VirtualFolderInfo>());
+        var libraryManager = FakeLibraryManager.Create(new List<VirtualFolderInfo>());
         var games = new GamesService(libraryManager);
         catalog = new GameArtworkCatalog(Path.Combine(root, "catalog"));
         var thumbs = (GameThumbService)RuntimeHelpers.GetUninitializedObject(typeof(GameThumbService));
@@ -1348,7 +1348,7 @@ public sealed class GameArtworkReconciliationServiceTests : IDisposable
     {
         catalog = new GameArtworkCatalog(Path.Combine(_root, "catalog-" + Guid.NewGuid().ToString("N")));
         return new GameArtworkReconciliationService(
-            new GamesService(new FakeLibraryManager(folders)),
+            new GamesService(FakeLibraryManager.Create(folders)),
             (GameThumbService)RuntimeHelpers.GetUninitializedObject(typeof(GameThumbService)),
             catalog,
             NullLogger<GameArtworkReconciliationService>.Instance,

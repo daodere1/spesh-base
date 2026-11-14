@@ -149,7 +149,7 @@ public sealed class ArtworkPriorityTests : IDisposable
         }
 
         var libraryId = Guid.NewGuid().ToString();
-        var libraryManager = new FakeLibraryManager(
+        var libraryManager = FakeLibraryManager.Create(
         [
             new VirtualFolderInfo
             {
