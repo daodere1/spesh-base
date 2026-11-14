@@ -13,6 +13,7 @@ namespace Moonfin.Server.Api;
 /// from the auth claims, never from the request body.
 /// </summary>
 [ApiController]
+[Route("Spesh/SocketRelay")]
 [Route("Moonfin/SocketRelay")]
 [Produces(MediaTypeNames.Application.Json)]
 public class SocketRelayController : ControllerBase

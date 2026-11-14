@@ -28,6 +28,7 @@ namespace Moonfin.Server.Api;
 /// rather than silently inheriting the gap.
 /// </remarks>
 [ApiController]
+[Route("Spesh/Games")]
 [Route("Moonfin/Games")]
 public class GamesController : ControllerBase
 {
@@ -64,7 +65,7 @@ public class GamesController : ControllerBase
         return Ok(_gamesService.GetDiagnostics());
     }
 
-    /// <summary>Lists the libraries Moonbase treats as game (ROM) libraries.</summary>
+    /// <summary>Lists the libraries Spesh Base treats as game (ROM) libraries.</summary>
     [HttpGet("Libraries")]
     [Authorize]
     [Produces(MediaTypeNames.Application.Json)]

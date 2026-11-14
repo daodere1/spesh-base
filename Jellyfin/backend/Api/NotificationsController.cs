@@ -14,6 +14,7 @@ namespace Moonfin.Server.Api;
 /// and the inbound Seerr webhook.
 /// </summary>
 [ApiController]
+[Route("Spesh/Notifications")]
 [Route("Moonfin/Notifications")]
 [Produces(MediaTypeNames.Application.Json)]
 public class NotificationsController : ControllerBase

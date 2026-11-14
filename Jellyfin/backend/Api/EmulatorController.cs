@@ -12,6 +12,7 @@ namespace Moonfin.Server.Api;
 /// Clients point <c>EJS_pathtodata</c> at <c>/Moonfin/EmulatorJS/data/</c>.
 /// </summary>
 [ApiController]
+[Route("Spesh/EmulatorJS")]
 [Route("Moonfin/EmulatorJS")]
 public class EmulatorController : ControllerBase
 {

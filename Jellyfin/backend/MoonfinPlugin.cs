@@ -57,15 +57,15 @@ public class MoonfinPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
     }
 
     /// <inheritdoc />
-    public override string Name => "Moonbase";
+    public override string Name => "Spesh Base";
 
     /// <inheritdoc />
-    public override string Description => "Moonbase is the Moonfin server plugin providing shared infrastructure for every Moonfin client (web, mobile, desktop, and TV): cross-device settings sync with per-device profiles and admin defaults, hosting for the Moonfin Web app at /Moonfin/Web/, a theme editor with custom theme APIs, ratings integrations (MDBList and TMDB), and Seerr proxy with single sign-on. It also powers retro game libraries via EmulatorJS, with keyless libretro box art plus server-hosted cores and save sync.";
+    public override string Description => "Spesh Base provides shared infrastructure for Spesh Media apps (web, mobile, desktop, and TV): cross-device settings sync with per-device profiles and admin defaults, hosting for Spesh Media web assets at /Spesh/Web/, a theme editor with custom theme APIs, ratings integrations (MDBList and TMDB), and Seerr proxy with single sign-on. It also powers retro game libraries via EmulatorJS, with keyless libretro box art plus server-hosted cores and save sync.";
 
     /// <inheritdoc />
-    public override Guid Id => Guid.Parse("8c5d0e91-4f2a-4b6d-9e3f-1a7c8d9e0f2b");
+    public override Guid Id => Guid.Parse("7d374fa1-67cd-4de8-9f93-fd825c14b502");
 
-    public new string DataFolderPath => Path.Combine(ApplicationPaths.PluginConfigurationsPath, "Moonfin");
+    public new string DataFolderPath => Path.Combine(ApplicationPaths.PluginConfigurationsPath, "SpeshBase");
 
     /// <summary>
     /// Resolves the log folder path for the plugin, falling back to the data folder if the log directory is unavailable.
@@ -91,7 +91,7 @@ public class MoonfinPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
 
     public static string ResolveDataFolderPath() =>
         Instance?.DataFolderPath
-        ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "Moonfin");
+        ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Jellyfin", "plugins", "SpeshBase");
 
     /// <inheritdoc />
     public override void UpdateConfiguration(BasePluginConfiguration configuration)
@@ -175,7 +175,7 @@ public class MoonfinPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
                 EnableInMainMenu = true,
                 // This slot only takes a Material Icons ligature. The Moonfin mark comes from
                 // the stylesheet in Web/inject.html, so the crescent is what shows without it.
-                MenuIcon = "dark_mode"
+                MenuIcon = "apps"
             }
         };
     }

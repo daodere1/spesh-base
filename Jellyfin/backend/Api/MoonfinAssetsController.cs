@@ -10,6 +10,7 @@ namespace Moonfin.Server.Api;
 /// Serves plugin-bundled image assets (rating provider icons).
 /// </summary>
 [ApiController]
+[Route("Spesh/Assets")]
 [Route("Moonfin/Assets")]
 public sealed class MoonfinAssetsController : ControllerBase
 {

@@ -14,6 +14,7 @@ namespace Moonfin.Server.Api;
 /// The user's API key is stored in their settings and never exposed to the client.
 /// </summary>
 [ApiController]
+[Route("Spesh/MdbList")]
 [Route("Moonfin/MdbList")]
 public class MdbListController : ControllerBase
 {

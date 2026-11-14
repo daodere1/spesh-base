@@ -19,13 +19,13 @@ public class SmartSearchIndexTask : IScheduledTask
         _logger = logger;
     }
 
-    public string Name => "Moonfin Smart Search Index";
+    public string Name => "Spesh Base Smart Search Index";
 
     public string Key => "Moonfin.SmartSearch.Index";
 
     public string Description => "Indexes the library and the most popular TMDB titles so clients can search with plain sentences.";
 
-    public string Category => "Moonfin";
+    public string Category => "Spesh Base";
 
     public async Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
     {

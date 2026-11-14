@@ -14,7 +14,7 @@ namespace Moonfin.Server.Services;
 /// </summary>
 public class FileTransformationStartupService : IScheduledTask
 {
-    public string Name => "Moonfin Startup";
+    public string Name => "Spesh Base Startup";
     public string Key => "Moonfin.Server.Startup";
     public string Description => "Manually registers Moonfin's file transformations. Normally runs automatically - use this only if the header entrypoint injection didn't load.";
     public string Category => "Startup Services";

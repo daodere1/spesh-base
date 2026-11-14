@@ -15,6 +15,7 @@ using Moonfin.Server.Services;
 namespace Moonfin.Server.Api;
 
 [ApiController]
+[Route("Spesh/CustomRows")]
 [Route("Moonfin/CustomRows")]
 public class CustomRowController : ControllerBase
 {

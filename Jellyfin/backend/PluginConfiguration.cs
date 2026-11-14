@@ -167,7 +167,7 @@ public class PluginConfiguration : BasePluginConfiguration, IGamesConfig
     /// </summary>
     public bool LiveTvDeleteIncompleteCopies { get; set; }
 
-    /// <summary>Watch parties that Moonbase hosts. Rooms live in memory and chat is never written down.</summary>
+    /// <summary>Watch parties that Spesh Base hosts. Rooms live in memory and chat is never written down.</summary>
     public bool WatchPartiesEnabled { get; set; } = true;
 
     public bool WatchPartyChat { get; set; } = true;
@@ -340,13 +340,13 @@ public class PluginConfiguration : BasePluginConfiguration, IGamesConfig
     /// URL of the hosted push relay that holds the shared service account and forwards to FCM.
     /// The plugin POSTs tokens and payload here by default so self-hosters need no service account.
     /// </summary>
-    public string PushRelayUrl { get; set; } = "https://push.moonfin.io/send";
+    public string PushRelayUrl { get; set; } = "";
 
     /// <summary>
     /// Whether push may go through the hosted relay. When off, push only works with a service
     /// account configured.
     /// </summary>
-    public bool PushRelayEnabled { get; set; } = true;
+    public bool PushRelayEnabled { get; set; } = false;
 
     /// <summary>
     /// Optional override for the relay app key, for anyone running their own relay. When empty
@@ -603,7 +603,7 @@ public class PluginConfiguration : BasePluginConfiguration, IGamesConfig
 /// </summary>
 /// <summary>
 /// The per-device admin defaults. A class rather than a dictionary, since the plugin configuration
-/// is stored as XML, and its JSON matches DefaultDeviceSettings on Moonbase for Silo and Plex.
+/// is stored as XML, and its JSON matches DefaultDeviceSettings on Spesh Base for Silo and Plex.
 /// </summary>
 public class MoonfinDeviceDefaults
 {

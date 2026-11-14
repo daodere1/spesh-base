@@ -12,6 +12,7 @@ namespace Moonfin.Server.Api;
 /// keeps the saves of RomM's games in their RomM account too.
 /// </summary>
 [ApiController]
+[Route("Spesh/Games/Saves")]
 [Route("Moonfin/Games/Saves")]
 public class GameSavesController : ControllerBase
 {

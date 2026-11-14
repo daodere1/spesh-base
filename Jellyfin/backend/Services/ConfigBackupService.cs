@@ -5,18 +5,18 @@ using Microsoft.Extensions.Logging;
 namespace Moonfin.Server.Services;
 
 /// <summary>
-/// Keeps a spare copy of Moonfin.Server.xml, and notices when the live one has been reset.
+/// Keeps a spare copy of Spesh.Base.xml, and notices when the live one has been reset.
 ///
 /// Jellyfin wraps the config read in a bare catch. Any failure to parse the file produces a fresh
 /// default configuration which it then writes straight back over the original, logging nothing, so
-/// from the admin's side every Moonbase server setting simply vanishes after a restart. Sanitizing
+/// from the admin's side every Spesh Base server setting simply vanishes after a restart. Sanitizing
 /// what the plugin writes stops it creating such a file, but a disk error, a half-written file or
 /// a config edited by hand all land in the same place, so the recovery path earns its keep.
 /// </summary>
 public sealed class ConfigBackupService : IHostedService
 {
     private const string BackupFolderName = "config-backup";
-    private const string BackupFileName = "Moonfin.Server.xml";
+    private const string BackupFileName = "Spesh.Base.xml";
 
     private readonly ILogger<ConfigBackupService> _logger;
     private readonly IApplicationPaths _paths;
@@ -108,7 +108,7 @@ public sealed class ConfigBackupService : IHostedService
         ConfigurationLooksReset = true;
         _logger.LogWarning(
             "The Moonfin plugin configuration is back to defaults but a backup with real settings "
-            + "survives at {BackupPath}. Restore it from the Moonbase config page, or copy it over "
+            + "survives at {BackupPath}. Restore it from the Spesh Base config page, or copy it over "
             + "{LivePath} and restart. Per-user settings live in their own files and are unaffected.",
             backupPath,
             livePath);

@@ -75,7 +75,7 @@ public class WatchPartyController : ControllerBase
     }
 
     /// <summary>
-    /// Where invite links point: Moonbase's public server URL, else Jellyfin's published server URL,
+    /// Where invite links point: Spesh Base's public server URL, else Jellyfin's published server URL,
     /// else the address this request came in at.
     /// </summary>
     private string PublicBase()

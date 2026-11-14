@@ -9,6 +9,7 @@ using Moonfin.Server.Services;
 namespace Moonfin.Server.Api;
 
 [ApiController]
+[Route("Spesh/Seasonal")]
 [Route("Moonfin/Seasonal")]
 [Produces(MediaTypeNames.Application.Json)]
 [Authorize]

@@ -10,6 +10,7 @@ namespace Moonfin.Server.Api;
 /// API controller for admin messages shown to users in the Moonfin app.
 /// </summary>
 [ApiController]
+[Route("Spesh")]
 [Route("Moonfin")]
 [Produces(MediaTypeNames.Application.Json)]
 public class MoonfinMessagesController : ControllerBase

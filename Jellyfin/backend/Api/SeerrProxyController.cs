@@ -17,6 +17,7 @@ namespace Moonfin.Server.Api;
 /// any Moonfin client can access Seerr through the Jellyfin server.
 /// </summary>
 [ApiController]
+[Route("Spesh/Seerr")]
 [Route("Moonfin/Seerr")]
 [Produces(MediaTypeNames.Application.Json)]
 public class SeerrProxyController : ControllerBase

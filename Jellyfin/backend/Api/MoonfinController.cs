@@ -24,6 +24,7 @@ namespace Moonfin.Server.Api;
 /// API controller for Moonfin settings synchronization.
 /// </summary>
 [ApiController]
+[Route("Spesh")]
 [Route("Moonfin")]
 [Produces(MediaTypeNames.Application.Json)]
 public class MoonfinController : ControllerBase

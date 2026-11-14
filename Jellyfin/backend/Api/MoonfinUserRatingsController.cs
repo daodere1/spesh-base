@@ -19,6 +19,7 @@ namespace Moonfin.Server.Api;
 /// library by the rating the user data carries.
 /// </summary>
 [ApiController]
+[Route("Spesh/UserRatings")]
 [Route("Moonfin/UserRatings")]
 [Produces(MediaTypeNames.Application.Json)]
 [Authorize]

@@ -16,10 +16,10 @@ namespace Moonfin.Server.Services;
 /// </summary>
 public class SeasonalKeywordsTask : IScheduledTask
 {
-    public string Name => "Moonfin Seasonal Keywords Sync";
+    public string Name => "Spesh Base Seasonal Keywords Sync";
     public string Key => "Moonfin.Seasonal.KeywordsSync";
     public string Description => "Looks up each movie's TMDB keywords so the seasonal Home row can find holiday titles in the library.";
-    public string Category => "Moonfin";
+    public string Category => "Spesh Base";
 
     private const int LibraryPageSize = 1000;
     private const int DelayBetweenRequestsMs = 50;

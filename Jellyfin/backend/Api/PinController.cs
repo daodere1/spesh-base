@@ -14,6 +14,7 @@ namespace Moonfin.Server.Api;
 /// returns a PIN or its hash. Clients that don't call it keep using their own local PIN.
 /// </summary>
 [ApiController]
+[Route("Spesh")]
 [Route("Moonfin")]
 [Produces(MediaTypeNames.Application.Json)]
 public class PinController : ControllerBase

@@ -9,6 +9,7 @@ namespace Moonfin.Server.Api;
 
 /// <summary>The top 3 of each Moonfin After Hours game, shared by everyone on the server.</summary>
 [ApiController]
+[Route("Spesh/MiniGames")]
 [Route("Moonfin/MiniGames")]
 [Authorize]
 [Produces(MediaTypeNames.Application.Json)]

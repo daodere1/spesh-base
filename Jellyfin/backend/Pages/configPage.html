@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Moonfin</title>
+    <title>Spesh Base</title>
 </head>
 <body>
     <div id="MoonfinConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-checkbox">
@@ -1934,7 +1934,7 @@
                     <div id="MoonfinConfigResetBanner" style="display:none; margin:0 0 1.2em 0; padding:1em 1.2em; border:1px solid rgba(245,158,11,0.6); border-left-width:4px; border-radius:4px; background:rgba(245,158,11,0.08);">
                         <div style="font-weight:600; margin-bottom:0.4em;">These settings look like they were reset</div>
                         <div class="fieldDescription" style="margin-bottom:0.8em;">
-                            Moonbase is running on default settings, but a backup holding real ones is still on disk at
+                            Spesh Base is running on default settings, but a backup holding real ones is still on disk at
                             <code id="MoonfinConfigBackupPath"></code>. Restoring copies it back over the live file. The
                             server has to be restarted afterwards for it to take effect. Per-user settings are stored
                             separately and aren't affected by this.
@@ -1943,14 +1943,14 @@
                         <div id="MoonfinRestoreConfigResult" class="fieldDescription" style="display:none; margin-top:0.6em;"></div>
                     </div>
                     <div class="sectionTitleContainer flex align-items-center">
-                        <h2 class="sectionTitle">Moonfin Settings</h2>
+                        <h2 class="sectionTitle">Spesh Base Settings</h2>
                     </div>
 
                     <div class="moonfinAdminShell">
                     <nav class="moonfinAdminNav" aria-label="Moonfin settings categories">
                         <div class="moonfinNavBrand">
                             <img id="MoonfinBrandLogo" class="moonfinNavLogo" alt="Moonfin" />
-                            <span class="moonfinNavBrandText">Moonfin</span>
+                            <span class="moonfinNavBrandText">Spesh Base</span>
                         </div>
                         <button type="button" class="moonfinNavItem is-active" data-tab="defaults">
                             <span class="material-icons moonfinNavIcon" aria-hidden="true">tune</span>
@@ -2162,7 +2162,7 @@
                         <div style="background-color: rgba(0, 164, 220, 0.1); border: 1px solid rgba(0, 164, 220, 0.3); border-radius: 10px; padding: 1em 1.5em; margin: 1em 0;">
                             <strong>SSO Proxy:</strong> When Seerr is enabled, Moonfin provides single sign-on.
                             Users authenticate once with their Jellyfin credentials, and the session is stored server-side.
-                            All Moonfin clients access Seerr API through <code>/Moonfin/Seerr/Api/</code>
+                            All Spesh Media clients access Seerr API through <code>/Moonfin/Seerr/Api/</code>
                             without re-authenticating.
                         </div>
                     </div>
@@ -2284,7 +2284,7 @@
                                 Registers Moonfin's scoring with Jellyfin's similar items pipeline, so every client
                                 on this server gets Moonfin recommendations, including the stock web client.
                                 Jellyfin's own providers only fill slots Moonfin leaves empty. Turn this off to hand
-                                similar items back to the server. Moonfin clients keep working either way.
+                                similar items back to the server. Spesh Media clients keep working either way.
                             </div>
                         </div>
                     </div>
@@ -2335,7 +2335,7 @@
                                 <span>Enable retro games</span>
                             </label>
                             <div class="fieldDescription">
-                                Lets Moonfin clients browse and play ROMs from a "Mixed Content" library using
+                                Lets Spesh Media clients browse and play ROMs from a "Mixed Content" library using
                                 <a href="https://github.com/EmulatorJS/EmulatorJS" target="_blank">EmulatorJS</a>.
                                 Organize ROMs as <code>System/&lt;game&gt;/rom.ext</code> with any BIOS files at the
                                 top of each system folder. No setup is needed for the emulator itself: cores stream
@@ -2424,9 +2424,9 @@
                                 <span>Isolate the web app for PSP games</span>
                             </label>
                             <div class="fieldDescription">
-                                PSP games need cross-origin isolation to start in Moonfin Web, and the player only gets
+                                PSP games need cross-origin isolation to start in Spesh Media Web, and the player only gets
                                 it when the whole app is isolated. Turn this on if PSP games stop with an error, then
-                                reload Moonfin Web. Once it's on, anything cross-origin you've added to the web client
+                                reload Spesh Media Web. Once it's on, anything cross-origin you've added to the web client
                                 has to allow isolation too.
                             </div>
                         </div>
@@ -2481,7 +2481,7 @@
                                 <span>Enable smart search</span>
                             </label>
                             <div class="fieldDescription">
-                                Lets Moonfin apps search with plain sentences like "90s movie about a kid pulled into a board game" or "electronic music duo from the 90s".
+                                Lets Spesh Media apps search with plain sentences like "90s movie about a kid pulled into a board game" or "electronic music duo from the 90s".
                                 Searches run on this server's CPU with a small model, so what people type never leaves the server. Turning it on downloads the model
                                 and indexes movies, shows, people, music and books with the Moonfin Smart Search Index task, which starts on its own with the first search.
                                 With the TMDB key on the Integrations tab it also indexes the most popular TMDB titles, so titles you don't have show up as Seerr suggestions.
@@ -2509,8 +2509,8 @@
                             <label class="emby-checkbox-label">
                                 <input type="checkbox" id="EnableSettingsSync" is="emby-checkbox" />
                                 <span><span class="moonfinSyncLines">
-                                    <span class="moonfinSyncTitle">Moonbase Sync</span>
-                                    <span class="moonfinSyncState"><span class="moonfinSyncDot" aria-hidden="true"></span><span class="moonfinSyncOnText">On for every user on this server</span><span class="moonfinSyncOffText">Off, so Moonfin apps keep their settings on each device</span></span>
+                                    <span class="moonfinSyncTitle">Spesh Base Sync</span>
+                                    <span class="moonfinSyncState"><span class="moonfinSyncDot" aria-hidden="true"></span><span class="moonfinSyncOnText">On for every user on this server</span><span class="moonfinSyncOffText">Off, so Spesh Media apps keep their settings on each device</span></span>
                                 </span></span>
                             </label>
                         </div>
@@ -2521,7 +2521,7 @@
                                 <span class="moonfinChip">MDBList ratings</span>
                                 <span class="moonfinChip">TMDB ratings</span>
                             </div>
-                            <div class="fieldDescription">Moonfin apps treat the plugin as missing while sync is off, so these stop working too.</div>
+                            <div class="fieldDescription">Spesh Media apps treat the plugin as missing while sync is off, so these stop working too.</div>
                         </div>
                     </div>
 
@@ -2843,7 +2843,7 @@
                                 <label class="inputLabel inputLabelUnfocused" for="DefaultVisualTheme">App Theme</label>
                                 <select id="DefaultVisualTheme" is="emby-select">
                                     <option value="">Not set (user decides)</option>
-                                    <option value="moonfin">Moonfin</option>
+                                    <option value="moonfin">Spesh Base</option>
                                     <option value="neonPulse">Neon Pulse</option>
                                     <option value="glass">Glass</option>
                                     <option value="eightbitHero">8-bit Hero</option>
@@ -3065,7 +3065,7 @@
                                     <option value="">Not set (user decides)</option>
                                     <option value="library">Library Art</option>
                                     <option value="black">Black</option>
-                                    <option value="moonfin">Moonfin</option>
+                                    <option value="moonfin">Spesh Base</option>
                                     <option value="calm">Calm</option>
                                     <option value="neonPulse">Neon Pulse</option>
                                     <option value="aurora">Aurora</option>
@@ -3557,7 +3557,7 @@
                                 <label class="inputLabel inputLabelUnfocused" for="DefaultMediaBarMode">Media Bar Style</label>
                                 <select id="DefaultMediaBarMode" is="emby-select">
                                     <option value="">Not set (user decides)</option>
-                                    <option value="moonfin">Moonfin</option>
+                                    <option value="moonfin">Spesh Base</option>
                                     <option value="makd">MakD</option>
                                     <option value="bookshelf">Bookshelf</option>
                                     <option value="gallery">Gallery</option>
@@ -4446,7 +4446,7 @@
                                 <label class="inputLabel inputLabelUnfocused" for="DefaultRecommendationSystemSource">Recommendation System</label>
                                 <select id="DefaultRecommendationSystemSource" is="emby-select">
                                     <option value="">Not set (user decides)</option>
-                                    <option value="local">Moonfin</option>
+                                    <option value="local">Spesh Base</option>
                                     <option value="online">TMDB</option>
                                 </select>
                                 <div class="fieldDescription">Source used for recommended and similar media on detail pages.</div>
@@ -4811,13 +4811,13 @@
                                     <option value="true">Yes</option>
                                     <option value="false">No</option>
                                 </select>
-                                <div class="fieldDescription">Watching together, with Moonbase parties or SyncPlay. The SyncPlay button under Navigation only shows while this is on.</div>
+                                <div class="fieldDescription">Watching together, with Spesh Base parties or SyncPlay. The SyncPlay button under Navigation only shows while this is on.</div>
                             </div>
                             <div class="inputContainer">
                                 <label class="inputLabel inputLabelUnfocused" for="DefaultWatchPartyService">Start Parties With</label>
                                 <select id="DefaultWatchPartyService" is="emby-select">
                                     <option value="">Not set (user decides)</option>
-                                    <option value="moonbase">Watch Party (Moonbase)</option>
+                                    <option value="moonbase">Watch Party (Spesh Base)</option>
                                     <option value="syncplay">SyncPlay</option>
                                 </select>
                                 <div class="fieldDescription">What a user starts. Rooms of both kinds show up in the app either way.</div>
@@ -5039,7 +5039,7 @@
                     <div class="verticalSection">
                         <h3 class="sectionTitle">Uploaded Themes</h3>
                         <div class="fieldDescription" style="margin-bottom: 0.8em;">
-                            Upload theme editor JSON exports so Moonfin clients can download and apply them.
+                            Upload theme editor JSON exports so Spesh Media clients can download and apply them.
                             Uploaded themes are synced to Mobile-Desktop, tvOS, and Smart-TV through plugin sync.
                         </div>
                         <div style="background-color: rgba(0, 164, 220, 0.1); border: 1px solid rgba(0, 164, 220, 0.3); border-radius: 10px; padding: 0.8em 1.2em; margin-bottom: 1em; font-size: 0.9em;">
@@ -5078,7 +5078,7 @@
                         <h3 class="sectionTitle">Default look</h3>
                         <p class="labelsLead">
                             Every label uses this look unless its own settings say otherwise. Labels are drawn by the
-                            Moonfin apps over movie and episode artwork; the files and the artwork are never changed.
+                            Spesh Media apps over movie and episode artwork; the files and the artwork are never changed.
                         </p>
                         <div class="labelsField">
                             <span class="labelsFieldName" id="LabelsDefaultStyleName">Style</span>
@@ -5121,7 +5121,7 @@
                     <div class="verticalSection">
                         <h3 class="sectionTitle">Built-in labels</h3>
                         <p class="labelsLead">
-                            Switch on the ones you want. Moonbase reads them from the server's own track data, and each
+                            Switch on the ones you want. Spesh Base reads them from the server's own track data, and each
                             row shows at most one answer: a 4K file never also says 1080p, and Atmos replaces TrueHD.
                             Release is the exception: REMUX and IMAX can both show.
                         </p>
@@ -5298,7 +5298,7 @@
                                 <option value="thumbnail">On the episode thumbnail</option>
                             </select>
                             <div class="fieldDescription">
-                                Applies to episode rows in Moonfin clients. Season and movie cards always draw the pill
+                                Applies to episode rows in Spesh Media clients. Season and movie cards always draw the pill
                                 over the artwork, since they have no runtime line to sit next to.
                             </div>
                         </div>
@@ -5533,7 +5533,7 @@
                                 <input type="checkbox" id="WatchPartiesEnabled" is="emby-checkbox" />
                                 <span>Turn on Watch Parties</span>
                             </label>
-                            <div class="fieldDescription">Moonfin users on this server can start and join parties that Moonbase hosts.</div>
+                            <div class="fieldDescription">Spesh Media users on this server can start and join parties that Spesh Base hosts.</div>
                         </div>
                         <div class="checkboxContainer">
                             <label class="emby-checkbox-label">
@@ -5570,7 +5570,7 @@
                                 <input type="checkbox" id="EnableSocketRelay" is="emby-checkbox" />
                                 <span>SyncPlay relay for Roku</span>
                             </label>
-                            <div class="fieldDescription">Roku can't open secure sockets, so on an https server it gets SyncPlay messages through Moonbase instead.</div>
+                            <div class="fieldDescription">Roku can't open secure sockets, so on an https server it gets SyncPlay messages through Spesh Base instead.</div>
                         </div>
                         <div class="fieldDescription" id="WatchPartiesNote">
                             Whether Jellyfin users start Watch Parties or SyncPlay, chat over the video and party alerts are each user's own settings.
@@ -5721,7 +5721,7 @@
                     <div class="verticalSection">
                         <h3 class="sectionTitle">Broadcast Message</h3>
                         <div class="fieldDescription" style="margin-bottom: 0.8em;">
-                            Send a message to all connected Moonfin clients right now. It is also saved to
+                            Send a message to all connected Spesh Media clients right now. It is also saved to
                             the Messages tab, so users who were offline still see it later.
                             For anything you want to write properly, use the Messages tab instead.
                         </div>
@@ -5767,7 +5767,7 @@
                         <div class="verticalSection">
                             <h3 class="sectionTitle">Active Downloads</h3>
                             <div class="fieldDescription" style="margin-bottom: 1em;">
-                                Transcoded downloads Moonfin clients have in progress. Original quality downloads copy
+                                Transcoded downloads Spesh Media clients have in progress. Original quality downloads copy
                                 the file as it is, so they don't show here. Regular playback transcodes are hidden too,
                                 since they already show on the Jellyfin dashboard.
                             </div>
@@ -6379,7 +6379,7 @@
             }
 
             var MoonfinConfig = {
-                pluginUniqueId: '8c5d0e91-4f2a-4b6d-9e3f-1a7c8d9e0f2b'
+                pluginUniqueId: '7d374fa1-67cd-4de8-9f93-fd825c14b502'
             };
 
             // Ids are the client's wire names for the pinnable tabs.
@@ -8823,7 +8823,7 @@
                     var rooms = (data && data.rooms) || [];
                     summary.textContent = rooms.length === 0
                         ? 'No rooms are open.'
-                        : (rooms.length === 1 ? '1 open' : rooms.length + ' open') + ' · Moonbase rooms only';
+                        : (rooms.length === 1 ? '1 open' : rooms.length + ' open') + ' · Spesh Base rooms only';
                     list.innerHTML = rooms.map(function(room) {
                         var status = room.phase === 'playing' ? (WATCH_PARTY_STATES[room.playback_state] || 'Playing') : 'In the lobby';
                         var started = new Date(room.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -9981,7 +9981,7 @@
                     }
 
                     labelTestResult = null;
-                    labelTestError = 'This file could not be tested. Restart the server after updating Moonbase, then try again.';
+                    labelTestError = 'This file could not be tested. Restart the server after updating Spesh Base, then try again.';
                     renderLabelTestReport();
                 });
             }
@@ -10108,7 +10108,7 @@
                 }).catch(function() {
                     var container = document.querySelector('#LabelsPresetGroups');
                     if (container) {
-                        container.innerHTML = '<div class="homeLayoutEmpty">The built-in labels could not be loaded. Restart the server after updating Moonbase, then reload this page.</div>';
+                        container.innerHTML = '<div class="homeLayoutEmpty">The built-in labels could not be loaded. Restart the server after updating Spesh Base, then reload this page.</div>';
                     }
                 });
 
@@ -10720,7 +10720,7 @@
                 button.dataset.bound = 'true';
 
                 button.addEventListener('click', function() {
-                    if (!window.confirm('Copy the backup over the current Moonbase settings? The server has to be restarted afterwards.')) {
+                    if (!window.confirm('Copy the backup over the current Spesh Base settings? The server has to be restarted afterwards.')) {
                         return;
                     }
 

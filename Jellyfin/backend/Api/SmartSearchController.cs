@@ -12,6 +12,7 @@ namespace Moonfin.Server.Api;
 
 /// <summary>Plain sentence search over the library and, through Seerr, titles the library lacks.</summary>
 [ApiController]
+[Route("Spesh")]
 [Route("Moonfin")]
 [Produces(MediaTypeNames.Application.Json)]
 public class SmartSearchController : ControllerBase

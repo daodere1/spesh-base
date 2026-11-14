@@ -12,11 +12,11 @@ namespace Moonfin.Server.Services;
 /// </summary>
 public class AnimeMarkerSyncTask : IScheduledTask
 {
-    public string Name => "Moonfin Anime Markers Sync";
+    public string Name => "Spesh Base Anime Markers Sync";
     public string Key => "Moonfin.Anime.MarkerSync";
     public string Description =>
         "Fetches filler, canon and recap classifications for the anime in your library from AnimeFillerList. No account or API key is needed.";
-    public string Category => "Moonfin";
+    public string Category => "Spesh Base";
 
     /// <summary>
     /// How long a run is allowed to take before it stops and leaves the rest for tomorrow.

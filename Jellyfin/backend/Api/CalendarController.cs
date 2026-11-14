@@ -11,6 +11,7 @@ namespace Moonfin.Server.Api;
 /// library, through the same notifications as Seerr.
 /// </summary>
 [ApiController]
+[Route("Spesh/Calendar")]
 [Route("Moonfin/Calendar")]
 [Produces(MediaTypeNames.Application.Json)]
 public class CalendarController : ControllerBase

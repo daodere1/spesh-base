@@ -18,6 +18,7 @@ namespace Moonfin.Server.Api;
 /// Serves the badges the admin's rules give each item, for clients to draw on posters.
 /// </summary>
 [ApiController]
+[Route("Spesh/PosterBadges")]
 [Route("Moonfin/PosterBadges")]
 [Produces(MediaTypeNames.Application.Json)]
 [Authorize]

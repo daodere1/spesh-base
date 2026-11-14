@@ -13,10 +13,10 @@ namespace Moonfin.Server.Services;
 /// </summary>
 public class MoonfinDataHealTask : IScheduledTask
 {
-    public string Name => "Moonfin Settings File Repair";
+    public string Name => "Spesh Base Settings File Repair";
     public string Key => "Moonfin.Data.Heal";
     public string Description => "Repairs Moonfin user settings files damaged by interrupted writes and quarantines anything unrecoverable.";
-    public string Category => "Moonfin";
+    public string Category => "Spesh Base";
 
     private readonly MoonfinSettingsService _settingsService;
     private readonly NotificationStore _notificationStore;

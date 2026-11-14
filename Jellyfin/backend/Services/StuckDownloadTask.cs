@@ -38,13 +38,13 @@ public class StuckDownloadTask : IScheduledTask
         _logger = logger;
     }
 
-    public string Name => "Moonfin Stuck Download Check";
+    public string Name => "Spesh Base Stuck Download Check";
 
     public string Key => "Moonfin.Seerr.StuckDownloads";
 
     public string Description => "Tells the requester and the admins when a Radarr or Sonarr download for a Seerr request gets stuck.";
 
-    public string Category => "Moonfin";
+    public string Category => "Spesh Base";
 
     public async Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
     {

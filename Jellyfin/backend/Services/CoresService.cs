@@ -9,7 +9,7 @@ namespace Moonfin.Server.Services;
 /// directory so every Moonfin client can use self-hosted cores. Uses the built-in
 /// <see cref="ZipArchive"/> (no third-party archive library, which Jellyfin's plugin load
 /// context cannot reliably resolve). The zip URL is the admin override <c>GamesCoreZipUrl</c>,
-/// or the <c>emulatorjs-data.zip</c> asset on the Moonbase plugin's latest GitHub release.
+/// or the <c>emulatorjs-data.zip</c> asset on the Spesh Base plugin's latest GitHub release.
 /// The download runs in the background and is polled via <see cref="GetStatus"/>; the player
 /// switches from the CDN to these files automatically once the common runtime files exist.
 /// </summary>
@@ -22,7 +22,7 @@ public class CoresService
     /// <c>player.html</c>) was last verified against.
     ///
     /// NEITHER of the two sources this service and <see cref="Moonfin.Server.Api.EmulatorController"/> can load
-    /// from is actually pinned today: the admin zip-URL override and the Moonbase GitHub
+    /// from is actually pinned today: the admin zip-URL override and the Spesh Base GitHub
     /// release asset are whatever an admin/maintainer last built, and the CDN fallback in
     /// <c>EmulatorController.ResolveDataPath</c> tracks EmulatorJS's "stable" channel rather
     /// than a fixed tag. This constant does not gate either path (yet); it exists purely as a

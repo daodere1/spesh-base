@@ -11,6 +11,7 @@ namespace Moonfin.Server.Api;
 /// API controller for Moonfin custom theme uploads and sync payload retrieval.
 /// </summary>
 [ApiController]
+[Route("Spesh")]
 [Route("Moonfin")]
 [Produces(MediaTypeNames.Application.Json)]
 public class MoonfinThemesController : ControllerBase

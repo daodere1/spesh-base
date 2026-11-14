@@ -11,6 +11,7 @@ namespace Moonfin.Server.Api;
 /// Controller to serve Moonfin web files.
 /// </summary>
 [ApiController]
+[Route("Spesh/Web")]
 [Route("Moonfin/Web")]
 public class MoonfinWebController : ControllerBase
 {

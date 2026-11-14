@@ -19,6 +19,7 @@ namespace Moonfin.Server.Api;
 /// belong to regular playback and already appear on the native dashboard.
 /// </summary>
 [ApiController]
+[Route("Spesh/Transcodes")]
 [Route("Moonfin/Transcodes")]
 [Authorize]
 public sealed class MoonfinTranscodesController : ControllerBase

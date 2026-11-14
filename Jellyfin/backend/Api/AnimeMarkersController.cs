@@ -13,6 +13,7 @@ namespace Moonfin.Server.Api;
 /// Serves filler, canon and recap markers for anime episodes.
 /// </summary>
 [ApiController]
+[Route("Spesh/AnimeMarkers")]
 [Route("Moonfin/AnimeMarkers")]
 public class AnimeMarkersController : ControllerBase
 {

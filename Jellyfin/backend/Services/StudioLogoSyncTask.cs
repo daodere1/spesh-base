@@ -16,10 +16,10 @@ namespace Moonfin.Server.Services;
 /// </summary>
 public class StudioLogoSyncTask : IScheduledTask
 {
-    public string Name => "Moonfin Studio Images Sync";
+    public string Name => "Spesh Base Studio Images Sync";
     public string Key => "Moonfin.Tmdb.StudioImages";
     public string Description => "Fetches and caches TMDB studio logos for all movies and shows in the library so clients can show them on the details screen and the Studios home row.";
-    public string Category => "Moonfin";
+    public string Category => "Spesh Base";
 
     private const int LibraryPageSize = 2000;
     private const int ItemsPerBatch = 20;

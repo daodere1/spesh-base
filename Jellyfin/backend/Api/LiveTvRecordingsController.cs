@@ -14,6 +14,7 @@ namespace Moonfin.Server.Api;
 /// Permissions mirror Jellyfin's own Live TV policies.
 /// </summary>
 [ApiController]
+[Route("Spesh/LiveTv")]
 [Route("Moonfin/LiveTv")]
 [Produces(MediaTypeNames.Application.Json)]
 public class LiveTvRecordingsController : ControllerBase

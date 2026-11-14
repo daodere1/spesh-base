@@ -1,0 +1,51 @@
+name: Spesh Base release
+on:
+  push:
+    tags: ['spesh-v*']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: spesh-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Test
+        shell: pwsh
+        run: |
+          dotnet test Jellyfin/tests/Moonfin.Server.Tests/Moonfin.Server.Tests.csproj -c Release
+          if ($LASTEXITCODE -ne 0) { throw 'Tests failed' }
+      - name: Build and publish
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = '${{ github.ref_name }}' -replace '^spesh-v', ''
+          if ($version -notmatch '^\d+\.\d+\.\d+\.\d+$') { throw 'Use a spesh-v four-part version tag' }
+          ./scripts/build-spesh.ps1 -Version $version
+          $zip = "artifacts/Spesh.Base-$version.zip"
+          gh release create '${{ github.ref_name }}' $zip --title "Spesh Base $version" --notes 'Spesh Base server foundation for Spesh Media. GPL-3.0; derived from Moonfin-Client/Plugin. Server restart required after installation.'
+          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }
+          git checkout master
+          git pull --ff-only origin master
+          $catalog = @(Get-Content manifest.json -Raw | ConvertFrom-Json)
+          if ($catalog.Count -eq 0) {
+            $catalog = @([pscustomobject]@{guid='7d374fa1-67cd-4de8-9f93-fd825c14b502'; name='Spesh Base'; overview='The shared server foundation for Spesh Media'; description='Spesh Base provides settings sync, themes, ratings and Seerr integrations for Spesh Media.'; owner='Spesh Media'; category='General'; versions=@()})
+          }
+          $entry = [pscustomobject]@{version=$version; changelog="Spesh Base $version"; targetAbi='10.10.0.0'; sourceUrl="https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Spesh.Base-$version.zip"; checksum=(Get-FileHash $zip -Algorithm MD5).Hash; timestamp=(Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ'); dependencies=@()}
+          $catalog[0].versions = @($entry) + @($catalog[0].versions | Where-Object version -ne $version)
+          ConvertTo-Json -InputObject $catalog -Depth 20 | Set-Content manifest.json
+          Copy-Item manifest.json Jellyfin/manifest.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add manifest.json Jellyfin/manifest.json
+          git commit -m "Publish Spesh Base $version catalog"
+          git push origin master

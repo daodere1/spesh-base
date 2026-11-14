@@ -9,6 +9,7 @@ namespace Moonfin.Server.Api;
 /// Discovery endpoint used by Moonfin web plugin mode.
 /// </summary>
 [ApiController]
+[Route("Spesh/Discovery")]
 [Route("Moonfin/Discovery")]
 [Produces(MediaTypeNames.Application.Json)]
 public sealed class MoonfinDiscoveryController : ControllerBase

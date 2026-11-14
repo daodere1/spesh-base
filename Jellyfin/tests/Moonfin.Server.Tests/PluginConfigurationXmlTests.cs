@@ -136,13 +136,13 @@ public class PluginConfigurationXmlTests
     }
 
     [Fact]
-    public void ConfigSavedBeforeTheRelaySwitchKeepsPushOn()
+    public void ImportedConfigDoesNotEnableAnUpstreamRelay()
     {
         var read = Deserialize(Encoding.UTF8.GetBytes(
             "<?xml version=\"1.0\"?><PluginConfiguration><PushRelayAppKey>key</PushRelayAppKey></PluginConfiguration>"));
 
-        Assert.True(read.PushRelayEnabled);
-        Assert.True(read.PushEnabled);
+        Assert.False(read.PushRelayEnabled);
+        Assert.False(read.PushEnabled);
 
         read.PushRelayEnabled = false;
         Assert.False(read.PushEnabled);

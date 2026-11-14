@@ -14,6 +14,7 @@ namespace Moonfin.Server.Api;
 /// Controller for managing user audiobook and book bookmarks &amp; notes sync.
 /// </summary>
 [ApiController]
+[Route("Spesh/Bookmarks")]
 [Route("Moonfin/Bookmarks")]
 [Produces(MediaTypeNames.Application.Json)]
 public class UserBookmarksController : ControllerBase

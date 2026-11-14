@@ -11,6 +11,7 @@ namespace Moonfin.Server.Api;
 /// follows them across devices.
 /// </summary>
 [ApiController]
+[Route("Spesh/Collections")]
 [Route("Moonfin/Collections")]
 public class CollectionsController : ControllerBase
 {
