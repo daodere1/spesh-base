@@ -23,7 +23,6 @@ public class PosterBadgePresetsTests
         public int? Height { get; set; }
         public int? Channels { get; set; }
         public string? VideoRangeType { get; set; }
-        public string? ExtendedVideoType { get; set; }
     }
 
     private static Track Video(int width, int height, string codec = "hevc", string? range = null) =>
@@ -71,9 +70,9 @@ public class PosterBadgePresetsTests
     }
 
     [Fact]
-    public void EmbyHdr10PlusIsReadFromItsOwnProperty()
+    public void JellyfinHdr10PlusIsReadFromVideoRangeType()
     {
-        var video = new Track { Type = TrackType.Video, Width = 3840, Height = 2160, Codec = "hevc", ExtendedVideoType = "Hdr10Plus" };
+        var video = new Track { Type = TrackType.Video, Width = 3840, Height = 2160, Codec = "hevc", VideoRangeType = "HDR10Plus" };
         Assert.Contains("hdr10plus", Detect("/films/a.mkv", video));
     }
 

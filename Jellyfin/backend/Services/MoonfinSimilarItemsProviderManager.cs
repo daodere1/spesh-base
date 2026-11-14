@@ -72,7 +72,7 @@ public class MoonfinSimilarItemsProviderManager : IHostedService
         var simMgrInterfaceType = Type.GetType("MediaBrowser.Controller.Library.ISimilarItemsManager, MediaBrowser.Controller");
         if (simMgrInterfaceType == null)
         {
-            _logger.LogDebug("ISimilarItemsManager not found, so this is Jellyfin 10.x or Emby. Provider registration skipped.");
+            _logger.LogDebug("ISimilarItemsManager not found on this Jellyfin version. Provider registration skipped.");
             return;
         }
 

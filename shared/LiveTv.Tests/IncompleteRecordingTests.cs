@@ -625,7 +625,7 @@ public sealed class IncompleteRecordingTests : IDisposable
     [Fact]
     public async Task VisibilityIsCheckedOnTheProgramsItemNotItsId()
     {
-        // Emby's program ids are numbers, so only the item id says who can see a program.
+        // Visibility must be checked using the library item identity.
         var source = AddAiring("1001", Start);
         source.ItemId = Guid.NewGuid();
         var future = AddAiring("1002", Start.AddDays(1));

@@ -22,8 +22,7 @@ public sealed class HealSummary
 /// recovered from their backup, repaired through JsonSalvage, or moved to a quarantine folder,
 /// never deleted, so support can still recover them by hand.
 ///
-/// Logger-agnostic on purpose: the Jellyfin and Emby hosts log through different interfaces,
-/// so callers read the returned summary and log it themselves.
+/// Callers read the returned summary and log it through the Jellyfin host.
 /// </summary>
 public static class FileHealer
 {

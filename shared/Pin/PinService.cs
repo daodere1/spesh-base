@@ -211,7 +211,7 @@ public class PinService
         }
     }
 
-    // The Emby plugin's netstandard2.1 has no static Pbkdf2 helper, and this gives the same hash.
+    // Preserve the existing PIN hash format.
     private static byte[] Derive(string pin, byte[] salt, int iterations)
     {
         using var kdf = new Rfc2898DeriveBytes(pin, salt, iterations, HashAlgorithmName.SHA256);

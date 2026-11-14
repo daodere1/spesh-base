@@ -15,7 +15,7 @@ public static class WatchPartyInvite
 {
     private static readonly Lazy<byte[]?> Preview = new Lazy<byte[]?>(() => Resource("Moonfin.WatchParty.preview.png"));
 
-    // invite.html is shared with the Plex companion, so it's a file of its own.
+    // Keep the invite page in its own embedded resource.
     private static readonly Lazy<string> Template = new Lazy<string>(() => Encoding.UTF8.GetString(Resource("Moonfin.WatchParty.invite.html") ?? Array.Empty<byte>()));
 
     /// <summary>The 1200x630 preview image embedded in the build, or null when it's missing.</summary>

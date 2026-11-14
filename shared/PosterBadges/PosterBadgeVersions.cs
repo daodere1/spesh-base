@@ -9,7 +9,7 @@ public static class PosterBadgeVersions
 {
     /// <summary>
     /// The version with the largest picture, as the server's own media sources, read by
-    /// property name so this works with Jellyfin and Emby alike. A tie keeps the first, which
+    /// property name from Jellyfin media sources. A tie keeps the first, which
     /// is the main version. Null when nothing usable came back, so the caller keeps its own.
     /// </summary>
     public static (string? Path, IEnumerable? Streams)? Pick(IEnumerable? sources)

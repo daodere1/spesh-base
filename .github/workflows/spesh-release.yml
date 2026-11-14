@@ -32,7 +32,7 @@ jobs:
           if ($version -notmatch '^\d+\.\d+\.\d+\.\d+$') { throw 'Use a spesh-v four-part version tag' }
           ./scripts/build-spesh.ps1 -Version $version
           $zip = "artifacts/Spesh.Base-$version.zip"
-          gh release create '${{ github.ref_name }}' $zip --title "Spesh Base $version" --notes 'Spesh Base server foundation for Spesh Media. GPL-3.0; derived from Moonfin-Client/Plugin. Server restart required after installation.'
+          gh release create '${{ github.ref_name }}' $zip --title "Spesh Base $version" --notes 'Spesh Base server foundation for Spesh Media, exclusively for Jellyfin. GPL-3.0; upstream attribution is preserved in the source documentation. Server restart required after installation.'
           if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }
           git checkout master
           git pull --ff-only origin master

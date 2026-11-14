@@ -165,27 +165,25 @@ public static class PosterBadgePresets
 
     private static string? DynamicRange(object video)
     {
-        // Jellyfin names the range in VideoRangeType, Emby in ExtendedVideoType.
+        // Jellyfin supplies the dynamic range through VideoRangeType.
         var range = Text(video, "VideoRangeType") ?? string.Empty;
-        var extended = Text(video, "ExtendedVideoType") ?? string.Empty;
 
-        if ((range.StartsWith("DOVI", StringComparison.OrdinalIgnoreCase) && !range.Equals("DOVIInvalid", StringComparison.OrdinalIgnoreCase))
-            || extended.Equals("DolbyVision", StringComparison.OrdinalIgnoreCase))
+        if (range.StartsWith("DOVI", StringComparison.OrdinalIgnoreCase) && !range.Equals("DOVIInvalid", StringComparison.OrdinalIgnoreCase))
         {
             return "dolbyVision";
         }
 
-        if (range.Equals("HDR10Plus", StringComparison.OrdinalIgnoreCase) || extended.Equals("Hdr10Plus", StringComparison.OrdinalIgnoreCase))
+        if (range.Equals("HDR10Plus", StringComparison.OrdinalIgnoreCase))
         {
             return "hdr10plus";
         }
 
-        if (range.Equals("HDR10", StringComparison.OrdinalIgnoreCase) || extended.Equals("Hdr10", StringComparison.OrdinalIgnoreCase))
+        if (range.Equals("HDR10", StringComparison.OrdinalIgnoreCase))
         {
             return "hdr10";
         }
 
-        if (range.Equals("HLG", StringComparison.OrdinalIgnoreCase) || extended.Equals("HyperLogGamma", StringComparison.OrdinalIgnoreCase))
+        if (range.Equals("HLG", StringComparison.OrdinalIgnoreCase))
         {
             return "hlg";
         }

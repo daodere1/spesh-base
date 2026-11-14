@@ -10783,21 +10783,10 @@
                 return JSON.stringify(value == null ? null : value);
             }
 
-            // Hosts where an account has several profiles, like Silo, offer the account and each profile.
             function actionTargets(users) {
-                var targets = [];
-                users.forEach(function(user) {
-                    var profiles = user.Profiles || [];
-                    if (profiles.length < 2) {
-                        targets.push({ Id: user.Id, Name: user.Name });
-                        return;
-                    }
-                    targets.push({ Id: user.Id, Name: user.Name + ' (all profiles)', allProfiles: true });
-                    profiles.forEach(function(profile) {
-                        targets.push({ Id: profile.Id, Name: profile.Primary ? user.Name : user.Name + ' > ' + profile.Name });
-                    });
+                return users.map(function(user) {
+                    return { Id: user.Id, Name: user.Name };
                 });
-                return targets;
             }
 
             function countSetDefaults(profile) {
@@ -13172,10 +13161,7 @@
                         actionsState.users = users || [];
                         actionsState.targets = actionTargets(actionsState.users);
                         var fromSelect = document.querySelector('#CopyFromUser');
-                        // Settings are copied from one profile, never from a whole account's.
-                        fromSelect.innerHTML = '<option value="">Pick a user</option>' + actionsState.targets.filter(function(target) {
-                            return !target.allProfiles;
-                        }).map(function(target) {
+                        fromSelect.innerHTML = '<option value="">Pick a user</option>' + actionsState.targets.map(function(target) {
                             return '<option value="' + esc(target.Id) + '">' + esc(target.Name) + '</option>';
                         }).join('');
                         fromSelect.value = actionsState.copy.from;

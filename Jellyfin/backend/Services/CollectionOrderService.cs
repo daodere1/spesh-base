@@ -5,7 +5,7 @@ namespace Moonfin.Server.Services;
 /// <summary>
 /// Stores a per-user custom ordering of the items in a collection, as a JSON array of item-id
 /// strings under <c>collections/{userId}/{collectionId}.json</c>. Item ids stay opaque because
-/// Jellyfin uses GUIDs and Emby uses numeric ids, so the same store works against either server.
+/// the Jellyfin identifiers are stored without changing their representation.
 /// </summary>
 public class CollectionOrderService
 {
@@ -111,8 +111,7 @@ public class CollectionOrderService
         return path.StartsWith(rootWithSep, StringComparison.Ordinal) ? path : null;
     }
 
-    // Collection ids are GUIDs on Jellyfin and numeric on Emby. Keeping only alphanumerics stops
-    // the id escaping the folder while leaving both forms intact.
+    // Keep collection identifiers within the data folder by allowing only alphanumerics.
     private static string SanitizeFileName(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return string.Empty;

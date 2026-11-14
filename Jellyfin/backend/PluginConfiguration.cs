@@ -603,7 +603,7 @@ public class PluginConfiguration : BasePluginConfiguration, IGamesConfig
 /// </summary>
 /// <summary>
 /// The per-device admin defaults. A class rather than a dictionary, since the plugin configuration
-/// is stored as XML, and its JSON matches DefaultDeviceSettings on Spesh Base for Silo and Plex.
+/// is stored as XML and exchanged with Spesh Media clients as JSON.
 /// </summary>
 public class MoonfinDeviceDefaults
 {

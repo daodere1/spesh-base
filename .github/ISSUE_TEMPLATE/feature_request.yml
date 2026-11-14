@@ -35,7 +35,7 @@ body:
         - Seerr integration
         - Games / Emulators
         - Custom home rows
-        - Web Client (Go to Moonfin-Core)
+        - Spesh Media Web client
         - Other / not sure
     validations:
       required: true
@@ -47,7 +47,6 @@ body:
       description: Which server(s) does this apply to?
       options:
         - Jellyfin
-        - Emby
         - Both / Not server-specific
     validations:
       required: true

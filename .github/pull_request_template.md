@@ -29,7 +29,7 @@ Link related issues or tickets separated by commas.
 - [ ] Seerr integration
 - [ ] Games / Emulators
 - [ ] Custom home rows
-- [ ] Web Client (Go to Moonfin-Core repo)
+- [ ] Web Client (Go to Spesh Media client repo)
 - [ ] Other / shared
 
 ## Changes Made

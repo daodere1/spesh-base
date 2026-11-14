@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <!-- One place to bump, so the three can't drift apart. The release scripts still
          override all of them with -p: switches. -->
-    <MoonfinVersion>3.1.0.1</MoonfinVersion>
+    <MoonfinVersion>3.1.0.2</MoonfinVersion>
     <AssemblyVersion>$(MoonfinVersion)</AssemblyVersion>
     <FileVersion>$(MoonfinVersion)</FileVersion>
     <Version>$(MoonfinVersion)</Version>
@@ -52,8 +52,7 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <!-- The seasonal row's pure logic and rules are shared with the Emby port, so both read the
-       same files from the repo's shared folder. -->
+  <!-- Feature logic and rules are compiled from the repo's shared folder into the Jellyfin plugin. -->
   <ItemGroup>
     <Compile Include="../../shared/Calendar/*.cs" Link="Calendar/%(Filename)%(Extension)" />
     <Compile Include="../../shared/LiveTv/*.cs" Link="LiveTv/%(Filename)%(Extension)" />

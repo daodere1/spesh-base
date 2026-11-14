@@ -135,8 +135,7 @@ public class PosterBadge
     public string Icon { get; set; } = string.Empty;
 
     /// <summary>
-    /// The shape clients read. Spelled out because Jellyfin and Emby name JSON properties
-    /// differently.
+    /// The explicit JSON shape read by Spesh Media clients.
     /// </summary>
     public object ToJson() => new
     {
@@ -284,7 +283,7 @@ public static class PosterBadgeMatcher
 
     /// <summary>
     /// The badges for one item, in the order of the rules. The streams are the server's own
-    /// track objects, read by property name, so this works with Jellyfin and Emby alike.
+    /// track objects, read by property name from Jellyfin.
     /// </summary>
     public static List<PosterBadge> Match(
         IEnumerable<PosterBadgeRule>? rules,

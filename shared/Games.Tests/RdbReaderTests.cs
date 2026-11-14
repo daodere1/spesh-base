@@ -10,7 +10,7 @@ namespace Moonfin.Games.Tests;
 public class RdbReaderTests : IDisposable
 {
     private readonly string _root =
-        Path.Combine(Path.GetTempPath(), $"moonfin-emby-rdb-{Guid.NewGuid():N}");
+        Path.Combine(Path.GetTempPath(), $"spesh-rdb-{Guid.NewGuid():N}");
 
     private string NewFile(string name)
     {

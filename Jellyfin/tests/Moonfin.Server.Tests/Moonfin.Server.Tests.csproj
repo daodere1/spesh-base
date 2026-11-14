@@ -31,7 +31,7 @@
     <ProjectReference Include="..\..\backend\Moonfin.Server.csproj" />
   </ItemGroup>
 
-  <!-- The seasonal row's shared logic is compiled into both ports, so its tests run against each. -->
+  <!-- Feature tests from shared run against the Jellyfin plugin. -->
   <ItemGroup>
     <Compile Include="../../../shared/Calendar.Tests/*.cs" Link="Calendar/%(Filename)%(Extension)" />
     <Compile Include="../../../shared/LiveTv.Tests/*.cs" Link="LiveTv/%(Filename)%(Extension)" />
