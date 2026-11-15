@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <!-- One place to bump, so the three can't drift apart. The release scripts still
          override all of them with -p: switches. -->
-    <MoonfinVersion>3.1.0.5</MoonfinVersion>
+    <MoonfinVersion>3.1.0.6</MoonfinVersion>
     <AssemblyVersion>$(MoonfinVersion)</AssemblyVersion>
     <FileVersion>$(MoonfinVersion)</FileVersion>
     <Version>$(MoonfinVersion)</Version>

@@ -46,32 +46,34 @@ internal sealed class JellyfinCalendarLibrary : ICalendarLibrary
         return folders;
     }
 
-    // HasAnyProviderId holds one value per provider, so each title is its own query.
+    // A month can contain hundreds of titles. Repeating an unrestricted provider
+    // query for each one scans a large library hundreds of times before HTTP
+    // headers are sent. Read the relevant item kind once and match IDs in memory.
     public IReadOnlyList<CalendarLibraryItem> FindTitles(bool series, IReadOnlyCollection<CalendarProviderIds> titles)
     {
         var found = new Dictionary<Guid, CalendarLibraryItem>();
-        foreach (var ids in titles)
+        var tvdb = titles.Where(i => i.Tvdb != null).Select(i => i.Tvdb!).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var tmdb = titles.Where(i => i.Tmdb != null).Select(i => i.Tmdb!).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var imdb = titles.Where(i => i.Imdb != null).Select(i => i.Imdb!).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        if (tvdb.Count + tmdb.Count + imdb.Count == 0) return [];
+        var query = new InternalItemsQuery
         {
-            var wanted = new Dictionary<string, string>();
-            if (ids.Tvdb != null) wanted[MetadataProvider.Tvdb.ToString()] = ids.Tvdb;
-            if (ids.Tmdb != null) wanted[MetadataProvider.Tmdb.ToString()] = ids.Tmdb;
-            if (ids.Imdb != null) wanted[MetadataProvider.Imdb.ToString()] = ids.Imdb;
-
-            var query = new InternalItemsQuery
-            {
-                HasAnyProviderId = wanted,
-                IncludeItemTypes = [series ? BaseItemKind.Series : BaseItemKind.Movie],
-                IsVirtualItem = false,
-                Recursive = true,
-                EnableTotalRecordCount = false
-            };
-
-            foreach (var item in _libraryManager.GetItemsResult(query).Items)
+            IncludeItemTypes = [series ? BaseItemKind.Series : BaseItemKind.Movie],
+            IsVirtualItem = false,
+            Recursive = true,
+            EnableTotalRecordCount = false
+        };
+        foreach (var item in _libraryManager.GetItemsResult(query).Items)
+        {
+            var ids = CalendarReminderNotifier.IdsOf(item);
+            if ((ids.Tvdb != null && tvdb.Contains(ids.Tvdb)) ||
+                (ids.Tmdb != null && tmdb.Contains(ids.Tmdb)) ||
+                (ids.Imdb != null && imdb.Contains(ids.Imdb)))
             {
                 if (!found.ContainsKey(item.Id))
                 {
                     var libraries = _libraryManager.GetCollectionFolders(item).Select(f => f.Id.ToString("N")).ToList();
-                    found[item.Id] = new CalendarLibraryItem(item.Id.ToString("N"), CalendarReminderNotifier.IdsOf(item), libraries);
+                    found[item.Id] = new CalendarLibraryItem(item.Id.ToString("N"), ids, libraries);
                 }
             }
         }

@@ -1,4 +1,13 @@
-# Spesh Base 3.1.0.5
+# Spesh Base 3.1.0.6
+
+- Matches monthly Sonarr/Radarr calendar titles with one library query per item kind, instead of a separate query for every title. This removes repeated scans that can exceed client request deadlines on large libraries.
+- Preserves provider ID matching, per-member library visibility, local episode links, direct Sonarr fallback and UTC timestamps.
+
+Requires Jellyfin 12.4.0 and a server restart. The SpeshTV web calendar and navigation update is deployed separately.
+
+Validation: all 1,480 Core tests passed, including a regression that matches 500 calendar titles with one library query and excludes unrelated titles.
+
+## Previous release: 3.1.0.5
 
 - Adds an optional administrator-configured direct Sonarr calendar fallback. Seerr remains preferred; episode calendars can work without a Seerr admin session or with Seerr disabled.
 - Keeps Sonarr API keys on the server. Direct connections use HTTPS or local-network HTTP and do not follow redirects.
